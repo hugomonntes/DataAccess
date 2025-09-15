@@ -25,9 +25,9 @@ public class Ex2 {
         String numberOfLineIsFind = "";
         try (Scanner sc = new Scanner(new File(fileName))) {
             while (sc.hasNext()) {
-                String[] textToCompare = sc.nextLine().split(" ");
-                for (String string : textToCompare) {
-                    if(string.equals(wordToCompare)){
+                String[] textToCompare = sc.nextLine().split("\\W+");
+                for (String word : textToCompare) {
+                    if(word.equalsIgnoreCase(wordToCompare)){
                         counterLines++;
                         numberOfLineIsFind += counterLines + " ";
                     }
