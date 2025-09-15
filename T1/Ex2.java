@@ -44,6 +44,14 @@ public class Ex2 {
             String fileName = sc.nextLine();
             System.out.print("Introduce la palabra a buscar en el archivo: ");
             String wordToCompare = sc.nextLine();
+            System.out.println(searchLine(fileName,wordToCompare));
+        }
+
+        try (Scanner sc = new Scanner(System.in)) {
+            System.out.print("Introduce el nombre del archivo con su extensión: ");
+            String fileName = sc.nextLine();
+            System.out.print("Introduce la palabra a buscar en el archivo: ");
+            String wordToCompare = sc.nextLine();
             System.out.println(searchLineAumented(fileName,wordToCompare));
         }
     }
