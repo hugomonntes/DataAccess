@@ -41,19 +41,20 @@ forma descendente siendo la ordenación no sensible al caso. */
     }
 
     public static int countNumberWords(String fileName){
-        String[] totalWords = new String[]{};
+        int total = 0;
         try (Scanner sc = new Scanner(new File(fileName))) {
             while(sc.hasNext()){
-                totalWords = sc.nextLine().split("\\W+");
+                String[] totalWords = sc.nextLine().split("\\W+");
+                total += totalWords.length;
             }
         } catch (Exception e) {
             e.getMessage();
         }
-        return totalWords.length;
+        return total;
     }
 
     public static void main(String[] args) {
-        System.out.println(countNumberLines("archivo.txt"));
+        System.out.println(countNumberWords("archivo.txt"));
         showMenu("", 'n');
     }
 }
