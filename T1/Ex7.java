@@ -91,6 +91,12 @@ forma descendente siendo la ordenación no sensible al caso. */
     public static void sortText(ArrayList<String> fileText, boolean isAscendant,boolean isSensitive){
         if (!isSensitive && !isAscendant) {
             Collections.sort(fileText, String.CASE_INSENSITIVE_ORDER);
+        } else if (isAscendant && isSensitive) {
+            Collections.sort(fileText);
+        } else if (!isAscendant && isSensitive){
+            Collections.sort(fileText, Collections.reverseOrder());
+        } else {
+            Collections.sort(fileText, Collections.reverseOrder(String.CASE_INSENSITIVE_ORDER));
         }
     }
 
