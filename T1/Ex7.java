@@ -101,8 +101,6 @@ forma descendente siendo la ordenación no sensible al caso. */
     }
 
     public static void main(String[] args) throws IOException {
-        System.out.println(countNumberWords("archivo.txt"));
-        showMenu("", 'n');
-        createFile("aaa.txt");
+        showMenu("", 'A');
     }
 }
