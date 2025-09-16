@@ -89,7 +89,7 @@ forma descendente siendo la ordenación no sensible al caso. */
     }
 
     public static void sortText(ArrayList<String> fileText, boolean isAscendant,boolean isSensitive){
-        if (isSensitive) {
+        if (!isSensitive && !isAscendant) {
             Collections.sort(fileText, String.CASE_INSENSITIVE_ORDER);
         }
     }
