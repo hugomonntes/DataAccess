@@ -1,12 +1,16 @@
-package T1EX;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AD_EX4 {
+    @SuppressWarnings({"BoxedValueEquality", "NumberEquality"})
     public static void calcularCharMasRepetido(ArrayList<Character> chars){
         for (Character character : chars) {
+            for (int i = 0; i < chars.size(); i++) {
+                if (character == chars.get(i)) {
+                    
+                }
+            }
             System.out.println(character);
         }
     }
