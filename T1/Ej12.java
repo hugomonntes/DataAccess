@@ -1,9 +1,11 @@
 
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.File;
 import java.util.ArrayList;
 
 public class Ej12 {
+    public static void escribirObjetos(File fichero, ArrayList<Cliente> clientes){
+        
+    }
 
     public static void main(String[] args) {
         // ESCRIBIR OBJETOS
@@ -12,10 +14,7 @@ public class Ej12 {
         ArrayList<Persona> personas;
         personas = new ArrayList<>();
         personas.add(new Persona("Lugonpa", 21));
-        try (FileOutputStream fichero = (new FileOutputStream("clientes.dat"));) {
-
-        } catch (IOException e) {
-            // TODO: handle exception
-        }
+        File fichero = new File("clientes.dat");
+        
     }
 }
