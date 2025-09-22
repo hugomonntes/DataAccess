@@ -28,7 +28,16 @@ public class AD_EX6 {
 
     @SuppressWarnings("unused")
     static String[] splitFiles(String dataFile, int numFiles, int maxChars){
-        return dataFile.splitWithDelimiters(" ",maxChars); 
+        String[] parts = new String[numFiles];
+        int start = 0;
+
+        for (int i = 0; i < numFiles; i++) {
+            int end = Math.min(start + maxChars, dataFile.length());
+            parts[i] = dataFile.substring(start, end);
+            start = end;
+        }
+
+        return parts;
     }
 
     static void createFile(String[] dataFiles) throws IOException{
@@ -38,9 +47,7 @@ public class AD_EX6 {
             } catch (Exception e) {
             }
         }
-    }
-
-    
+    }    
 }
 
 // 6. Crea un programa que realice las siguientes acciones:
