@@ -31,11 +31,14 @@ public class AD_EX6 {
     }
 
     static void createFile(String[] dataFiles) throws IOException{
-        try (FileWriter fw = new FileWriter("bbbb.txt")) {
-            for (String file : dataFiles) {
-                fw.write(file);
+        for (int i = 0; i < dataFiles.length; i++) {
+            try (FileWriter fw = new FileWriter(String.format("file%d.txt", i))) {
+                for (String file : dataFiles) {
+                    fw.write(file);
+                }
+            } catch (Exception e) {
             }
-        } catch (Exception e) {
+            
         }
     }
 
