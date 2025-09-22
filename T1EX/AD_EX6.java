@@ -7,7 +7,8 @@ import java.util.Scanner;
 
 public class AD_EX6 {
     public static void main(String[] args) throws IOException {
-        createFile(splitFiles(storageDataFile("a.txt"), calculateNumFiles(storageDataFile("a.txt"), 5), 5));
+        int maxCharsPerFile = 5;
+        createFile(splitFiles(storageDataFile("a.txt"), calculateNumFiles(storageDataFile("a.txt"), maxCharsPerFile), maxCharsPerFile));
     }
 
     @SuppressWarnings("unused")
@@ -27,7 +28,7 @@ public class AD_EX6 {
 
     @SuppressWarnings("unused")
     static String[] splitFiles(String dataFile, int numFiles, int maxChars){
-        return dataFile.splitWithDelimiters(dataFile, maxChars);
+        return dataFile.splitWithDelimiters("",maxChars);
     }
 
     static void createFile(String[] dataFiles) throws IOException{
