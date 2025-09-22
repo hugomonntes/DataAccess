@@ -28,7 +28,7 @@ public class AD_EX6 {
 
     @SuppressWarnings("unused")
     static String[] splitFiles(String dataFile, int numFiles, int maxChars){
-        return dataFile.splitWithDelimiters(" ",maxChars);
+        return dataFile.splitWithDelimiters(" ",maxChars); 
     }
 
     static void createFile(String[] dataFiles) throws IOException{
