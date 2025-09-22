@@ -33,12 +33,9 @@ public class AD_EX6 {
     static void createFile(String[] dataFiles) throws IOException{
         for (int i = 0; i < dataFiles.length; i++) {
             try (FileWriter fw = new FileWriter(String.format("file%d.txt", i))) {
-                for (String file : dataFiles) {
-                    fw.write(file);
-                }
+                fw.write(dataFiles[i]);
             } catch (Exception e) {
             }
-            
         }
     }
 
