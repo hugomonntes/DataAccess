@@ -1,0 +1,51 @@
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
+public class AD_EX6 {
+    public static void main(String[] args) throws IOException {
+        createFile(splitFiles(storageDataFile("a.txt"), calculateNumFiles(storageDataFile("a.txt"), 5), 5));
+    }
+
+    @SuppressWarnings("unused")
+    static String storageDataFile (String fileName) throws FileNotFoundException {
+        String dataStorage = "";
+        Scanner sc = new Scanner(new File(fileName));
+        while (sc.hasNext()) { 
+            dataStorage += sc.nextLine();
+        }
+        return dataStorage;
+    }
+
+    @SuppressWarnings("unused")
+    static int calculateNumFiles(String dataFile, int maxChars){
+        return dataFile.length() / maxChars;
+    }
+
+    @SuppressWarnings("unused")
+    static String[] splitFiles(String dataFile, int numFiles, int maxChars){
+        return dataFile.splitWithDelimiters(dataFile, maxChars);
+    }
+
+    static void createFile(String[] dataFiles) throws IOException{
+        try (FileWriter fw = new FileWriter("bbbb.txt")) {
+            for (String file : dataFiles) {
+                fw.write(file);
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    
+}
+
+// 6. Crea un programa que realice las siguientes acciones:
+// ➢ Dividir un fichero en función de:
+// • De un número n de caracteres (en cada fichero generado debe poseer n
+// caracteres).
+// • De un número l de líneas (en cada fichero generado debe poseer l líneas).
+// ➢ Unir ficheros: dada una lista de ficheros generará un nuevo fichero que
+// resultara de la unión de los anteriores.
