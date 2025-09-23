@@ -57,8 +57,10 @@ public class AD_EX6 {
     static String[] storageDataFileInLines (String fileName) throws FileNotFoundException {
         String dataStorage[] = new String[]{};
         Scanner sc = new Scanner(new File(fileName));
+        int i = 0;
         while (sc.hasNext()) { 
-            dataStorage = sc.nextLine().split("\n");
+            dataStorage[i] = sc.nextLine();
+            i++;
         }
         return dataStorage;
     }
