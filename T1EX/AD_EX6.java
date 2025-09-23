@@ -7,8 +7,7 @@ import java.util.Scanner;
 
 public class AD_EX6 {
     public static void main(String[] args) throws IOException {
-        int maxCharsPerFile = 5;
-        createFile(splitFiles(storageDataFile("a.txt"), calculateNumFiles(storageDataFile("a.txt"), maxCharsPerFile), maxCharsPerFile));
+        createFile(splitFiles(storageDataFile("a.txt"), calculateNumFiles(storageDataFile("a.txt"), 5), 5));
     }
 
     @SuppressWarnings("unused")
