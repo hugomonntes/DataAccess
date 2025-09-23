@@ -7,9 +7,10 @@ import java.util.Scanner;
 
 public class AD_EX6 {
     public static void main(String[] args) throws IOException {
-        createFile(splitInFiles(storageDataFile("a.txt"), calculateNumFiles(storageDataFile("a.txt"), 5), 5));
+        //createFile(splitInFiles(storageDataFile("a.txt"), calculateNumFiles(storageDataFile("a.txt"), 5), 5));
+        createFile1(storageDataFileInLines("a.txt"));
     }
-
+    //#region
     @SuppressWarnings("unused")
     static String storageDataFile (String fileName) throws FileNotFoundException {
         String dataStorage = "";
@@ -34,7 +35,7 @@ public class AD_EX6 {
             int end = Math.min(start + maxChars, dataFile.length());
             parts[i] = dataFile.substring(start, end);
             start = end;
-            if ((end - start) < maxChars) {
+            if ((end - start) < maxChars) { // FIXME
                 start += (maxChars - (start + end));
             }
         }
@@ -49,7 +50,30 @@ public class AD_EX6 {
             } catch (Exception e) {
             }
         }
-    }    
+    }
+    //#endregion
+
+    @SuppressWarnings("unused")
+    static String[] storageDataFileInLines (String fileName) throws FileNotFoundException {
+        String dataStorage[] = new String[]{};
+        Scanner sc = new Scanner(new File(fileName));
+        while (sc.hasNext()) { 
+            dataStorage = sc.nextLine().split("\n");
+        }
+        return dataStorage;
+    }
+
+    static void createFile1(String[] dataFiles) throws IOException{
+        for (int i = 0; i < dataFiles.length; i++) {
+            try (FileWriter fw = new FileWriter(String.format("file%d.txt", i))) {
+                fw.write(dataFiles[i]);
+                System.out.println(dataFiles[i]);
+            } catch (Exception e) {
+            }
+        }
+    }
+
+
 }
 
 // 6. Crea un programa que realice las siguientes acciones:
