@@ -74,8 +74,6 @@ public class AD_EX6 {
             }
         }
     }
-
-
 }
 
 // 6. Crea un programa que realice las siguientes acciones:
