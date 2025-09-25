@@ -33,12 +33,25 @@ public class AD_EX9 {
         }
     }
 
-    public static void consultarArchivoBinario(String fileName) throws FileNotFoundException, IOException {
+    public static String consultarArchivoBinario(String fileName) throws FileNotFoundException, IOException {
+        String data = "";
         try (FileInputStream fis = new FileInputStream(new File(fileName)); DataInputStream in = new DataInputStream(fis)) {
             while (true) {
-                System.out.printf("%d %s %.2f%n", in.readInt(), in.readUTF(), in.readFloat());
+                data += String.format("%d,%s,%.2f%n", in.readInt(), in.readUTF(), in.readFloat());
             }
         } catch (EOFException e) {
+        }
+        return data;
+    }
+
+    public static void modificarAlumno(String data, int codigo, String nombre, float altura){
+        String[] dataStorage = data.split(","); // 0 , "Hugo", 1.8
+        // 1, "Iago", 1.9
+        for (String dataStorage1 : dataStorage) {
+            if (dataStorage1.equals(nombre)) {
+                dataStorage1 = "hola";
+                System.out.println(dataStorage1);
+            }
         }
     }
 
@@ -47,6 +60,7 @@ public class AD_EX9 {
         alumnos.add(new Alumno(1, "Juan", 1.75f));
         alumnos.add(new Alumno(2, "Ana", 1.65f));
         escribirArchivoBinario("alumnos.dat", alumnos);
-        consultarArchivoBinario("alumnos.dat");
+        System.out.println(consultarArchivoBinario("alumnos.dat"));
+        modificarAlumno(consultarArchivoBinario("alumnos.dat"), 2, "Ana", 1);
     }
 }
