@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class AD_EX9 {
 
@@ -24,8 +25,9 @@ public class AD_EX9 {
     // ➢ Borrar alumnos.
     // El programa deberá avisar de posibles problemas encontrados como puede ser el
     // intentar borrar un alumno que no exista.
+
     public static void escribirArchivoBinario(String fileName, ArrayList<Alumno> alumnos) {
-        try (FileOutputStream fos = new FileOutputStream(new File(fileName), true); DataOutputStream out = new DataOutputStream(fos)) {
+        try (FileOutputStream fos = new FileOutputStream(new File(fileName), false); DataOutputStream out = new DataOutputStream(fos)) {
             for (Alumno alumno : alumnos) {
                 out.writeInt(alumno.getCodigo());
                 out.writeUTF(alumno.getNombre());
@@ -35,34 +37,88 @@ public class AD_EX9 {
         }
     }
 
-    public static String consultarArchivoBinario(String fileName) throws FileNotFoundException, IOException {
-        String data = "";
+    public static ArrayList<Alumno> consultarArchivoBinario(String fileName) throws FileNotFoundException, IOException {
+        ArrayList<Alumno> alumnos = new ArrayList<>();
         try (FileInputStream fis = new FileInputStream(new File(fileName)); DataInputStream in = new DataInputStream(fis)) {
             while (true) {
-                data += String.format("%d,%s,%.2f%n", in.readInt(), in.readUTF(), in.readFloat());
+                alumnos.add(new Alumno(in.readInt(), in.readUTF(), in.readFloat()));
             }
         } catch (EOFException e) {
         }
-        return data;
+        return alumnos;
     }
 
-    public static void modificarAlumno(String data, int codigo, String nombre, float altura){
-        String[] dataStorage = data.split(","); // 0 , "Hugo", 1.8
-        // 1, "Iago", 1.9
-        for (String dataStorage1 : dataStorage) {
-            if (dataStorage1.equals(nombre)) {
-                dataStorage1 = "hola";
-                System.out.println(dataStorage1);
+    public static void modificarAlumno(ArrayList<Alumno> alumnos, int queryCode, String nombre, float altura){
+        for (Alumno alumno : alumnos) {
+            if (alumno.codigo == queryCode) {
+                alumno.nombre = nombre;
+                alumno.altura = altura;
+            }
+        }
+    }
+
+    public static Alumno crearAlumno(int codigo, String nombre, float altura){
+        return new Alumno(codigo, nombre, altura);
+    }
+
+    public static void añadirAlumno(ArrayList<Alumno> alumnos, Alumno alumno){
+        if (alumnos.indexOf(alumno) != -1) { 
+            throw new IllegalArgumentException();
+        }
+        alumnos.add(alumno);
+    }
+
+    public static void borrarAlumno(ArrayList<Alumno> alumnos, int codigo){
+        for (int i = 0; i < alumnos.size(); i++) {
+            if (alumnos.get(i).codigo == codigo) {
+                alumnos.remove(i);
+                i--;
             }
         }
     }
 
     public static void main(String[] args) throws FileNotFoundException, IOException {
-        ArrayList<Alumno> alumnos = new ArrayList<>();
-        alumnos.add(new Alumno(1, "Juan", 1.75f));
-        alumnos.add(new Alumno(2, "Ana", 1.65f));
-        escribirArchivoBinario("alumnos.dat", alumnos);
-        System.out.println(consultarArchivoBinario("alumnos.dat"));
-        modificarAlumno(consultarArchivoBinario("alumnos.dat"), 2, "Ana", 1);
+        try (Scanner sc = new Scanner(System.in)) {
+            int option;
+            String fileName = "alumnos.dat";
+            ArrayList<Alumno> alumnos = consultarArchivoBinario(fileName);
+            do {
+                System.out.println("1.- Añadir");
+                System.out.println("2.- Consultar");
+                System.out.println("3.- Modificar");
+                System.out.println("4.- Borrar");
+                System.out.println("5.- Salir.");
+                option = sc.nextInt();
+                switch (option) {
+                    case 1:
+                        int numRamdon = (int)Math.random()*3;
+                        añadirAlumno(alumnos, crearAlumno(numRamdon, "Alumno" + numRamdon, 1.85f));
+                        escribirArchivoBinario(fileName, alumnos);
+                        ;
+                            break;
+                    case 2:
+                        for (Alumno alumno : alumnos) {
+                            System.out.println(alumno);
+                        }
+                        ;
+                            break;
+                    case 3:
+                        modificarAlumno(alumnos, 1, "Jaime", 1.9f);
+                        ;
+                            break;
+                    case 4:
+                        borrarAlumno(alumnos, 1);
+                        ;
+                            break;
+                    case 5:
+                        ;
+                            break;
+                    default:
+                        
+                            break;
+                }
+            
+            } while (option!=5);
+        }
     }
 }

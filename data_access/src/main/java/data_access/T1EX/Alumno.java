@@ -51,4 +51,12 @@ public class Alumno {
     public String toString() {
         return "Alumno [altura=" + altura + ", codigo=" + codigo + ", nombre=" + nombre + "]";
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Alumno && this.codigo == ((Alumno)obj).codigo) {
+            return true;
+        }
+        return false;
+    }
 }

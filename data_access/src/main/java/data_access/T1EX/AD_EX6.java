@@ -13,22 +13,20 @@ public class AD_EX6 {
         createFile1(storageDataFileInLines("a.txt"));
     }
     //#region
-    @SuppressWarnings("unused")
     static String storageDataFile (String fileName) throws FileNotFoundException {
         String dataStorage = "";
-        Scanner sc = new Scanner(new File(fileName));
-        while (sc.hasNext()) { 
-            dataStorage += sc.nextLine();
+        try (Scanner sc = new Scanner(new File(fileName))) {
+            while (sc.hasNext()) { 
+                dataStorage += sc.nextLine();
+            }
         }
         return dataStorage;
     }
 
-    @SuppressWarnings("unused")
     static int calculateNumFiles(String dataFile, int maxChars){
         return dataFile.length() / maxChars;
     }
 
-    @SuppressWarnings("unused")
     static String[] splitInFiles(String dataFile, int numFiles, int maxChars){
         String[] parts = new String[numFiles];
         int start = 0;
@@ -55,14 +53,14 @@ public class AD_EX6 {
     }
     //#endregion
 
-    @SuppressWarnings("unused")
     static String[] storageDataFileInLines (String fileName) throws FileNotFoundException {
         String dataStorage[] = new String[]{};
-        Scanner sc = new Scanner(new File(fileName));
-        int i = 0;
-        while (sc.hasNext()) { 
-            dataStorage[i] = sc.nextLine();
-            i++;
+        try (Scanner sc = new Scanner(new File(fileName))) {
+            int i = 0;
+            while (sc.hasNext()) { 
+                dataStorage[i] = sc.nextLine();
+                i++;
+            }
         }
         return dataStorage;
     }
