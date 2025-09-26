@@ -1,0 +1,8 @@
+Entrada: 
+    Bytes FileInputStream
+    Tipos Primitivos DataInputStream
+    Objetos ObjectInputStream
+Salida: 
+    Bytes FileOutputStream
+    Tipos Primitivos DataOutputStream
+    Objetos ObjectOutputStream
