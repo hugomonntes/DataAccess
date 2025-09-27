@@ -3,13 +3,9 @@ package data_access.T1EX;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
-
-import data_access.T1.Cliente;
 
 public class AD_EX10 {
     // 10.Realiza un programa que defina las clases Persona y Depart almacenado
@@ -36,8 +32,9 @@ public class AD_EX10 {
         }
     }
 
-    public static void escribirArchivo(File fichero, ArrayList<Object> objetos){
-        try (FileOutputStream fos = new FileOutputStream(fichero); ObjectOutputStream out = new ObjectOutputStream(fos)) {
+    public static void escribirArchivo(File fichero, ArrayList<Object> objetos) {
+        try (FileOutputStream fos = new FileOutputStream(fichero);
+                ObjectOutputStream out = new ObjectOutputStream(fos)) {
             for (Object obj : objetos) {
                 out.writeObject(obj);
             }
@@ -45,7 +42,7 @@ public class AD_EX10 {
         }
     }
 
-    public static ArrayList<Object> consultarArchivo(File fichero){
+    public static ArrayList<Object> consultarArchivo(File fichero) {
         ArrayList<Object> objetos = new ArrayList<>();
         try (FileInputStream fis = new FileInputStream(fichero); ObjectInputStream ois = new ObjectInputStream(fis)) {
             while (true) {
@@ -56,12 +53,25 @@ public class AD_EX10 {
         return objetos;
     }
 
+    public static void eliminarObjeto(ArrayList<Object> objetos, Object obj) {
+        for (int i = 0; i < objetos.size(); i++) {
+            if (((Persona)obj).getNombre() == ((Persona)objetos.get(i)).getNombre()) {
+                objetos.remove(i);
+                i--;
+            }
+        }
+    }
+
     public static void main(String[] args) {
         ArrayList<Object> objetos = consultarArchivo(new File("objetos.dat"));
-        añadirObjetos(objetos, crearPersona("Fuiin", 33));
-        escribirArchivo(new File("objetos.dat"), objetos);
+        // añadirObjetos(objetos, crearPersona("Fuiin", 33));
+        // escribirArchivo(new File("objetos.dat"), objetos);
         for (Object object : objetos) {
             System.out.println(object);
+        }
+        eliminarObjeto(objetos, new Persona("Fuiin", 33));
+        for (Object object : objetos) {
+            System.out.println(object + "borrado");
         }
     }
 
