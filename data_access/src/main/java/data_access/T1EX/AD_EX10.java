@@ -55,24 +55,37 @@ public class AD_EX10 {
 
     public static void eliminarObjeto(ArrayList<Object> objetos, Object obj) {
         for (int i = 0; i < objetos.size(); i++) {
-            if (((Persona)obj).getNombre() == ((Persona)objetos.get(i)).getNombre()) {
-                objetos.remove(i);
-                i--;
+            if (obj instanceof Persona && objetos.get(i) instanceof Persona) {
+                if (((Persona) obj).getNombre().equals(((Persona) objetos.get(i)).getNombre())) {
+                    objetos.remove(i);
+                    i--;
+                }
+            } else if (obj instanceof Depart && objetos.get(i) instanceof Depart) {
+                if (((Depart) obj).getNumeroDepart() == ((Depart) objetos.get(i)).getNumeroDepart()) {
+                    objetos.remove(i);
+                    i--;
+                }
             }
         }
     }
 
     public static void main(String[] args) {
-        ArrayList<Object> objetos = consultarArchivo(new File("objetos.dat"));
-        // añadirObjetos(objetos, crearPersona("Fuiin", 33));
-        // escribirArchivo(new File("objetos.dat"), objetos);
-        for (Object object : objetos) {
-            System.out.println(object);
-        }
-        eliminarObjeto(objetos, new Persona("Fuiin", 33));
-        for (Object object : objetos) {
-            System.out.println(object + "borrado");
-        }
+        File fichero = new File("objetos.dat");
+        ArrayList<Object> objetos = consultarArchivo(fichero);
+
+        añadirObjetos(objetos, crearPersona("Jaime", 33));
+        añadirObjetos(objetos, crearDepartamento("Ventas", 101));
+
+        escribirArchivo(fichero, objetos);
+
+        System.out.println("Antes de borrar");
+        objetos.forEach(System.out::println);
+
+        eliminarObjeto(objetos, new Persona("Jaime", 33));
+        escribirArchivo(fichero, objetos);
+
+        System.out.println("Después de borrar");
+        objetos.forEach(System.out::println);
     }
 
 }
