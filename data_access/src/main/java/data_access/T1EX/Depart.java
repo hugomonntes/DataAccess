@@ -29,6 +29,6 @@ public class Depart implements Serializable {
 
     @Override
     public String toString() {
-        return "nombreDepart: '" + nombreDepart + "', numeroDepart: " + numeroDepart + "}";
+        return nombreDepart + " / " + numeroDepart;
     }
 }

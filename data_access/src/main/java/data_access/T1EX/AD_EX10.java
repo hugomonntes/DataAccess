@@ -79,13 +79,17 @@ public class AD_EX10 {
         escribirArchivo(fichero, objetos);
 
         System.out.println("Antes de borrar");
-        objetos.forEach(System.out::println);
+        for (Object obj : objetos) {
+            System.out.println(obj.toString());
+        }
 
         eliminarObjeto(objetos, new Persona("Jaime", 33));
         escribirArchivo(fichero, objetos);
 
         System.out.println("Después de borrar");
-        objetos.forEach(System.out::println);
+        for (Object obj : objetos) {
+            System.out.println(obj.toString());
+        }
     }
 
 }
