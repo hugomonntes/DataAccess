@@ -27,10 +27,12 @@
 package data_access.T1EX;
 
 import java.io.BufferedInputStream;
-import java.io.File;
+import java.io.BufferedOutputStream;
+import java.io.EOFException;
 import java.io.FileInputStream;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class AD_EX11 {
     // 11. Compara la eficiencia de copiar un fichero de 100MB usando por un lado
@@ -38,30 +40,42 @@ public class AD_EX11 {
     // FileOutputStream. En este último caso prueba con los siguientes tamaños de
     // buffer: 10,100,1000, …
 
-    public static void Buffered() {
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                System.out.println("Hola");
-            }
-            
-        }, 10);
-        try (FileInputStream fis = new FileInputStream(new File("prueba100MB.txt"));
-                BufferedInputStream bis = new BufferedInputStream(fis)) {
-                    bis.read();
-        } catch (Exception e) {
+    public static void escribirArchivoConBuffered() throws IOException {
+        try (FileOutputStream fos = new FileOutputStream("prueba100MB.txt");
+                BufferedOutputStream bos = new BufferedOutputStream(fos)) {
+                    while (true) { 
+                        // bos.write();
+                    }
+        } catch (EOFException e) {
         }
     }
 
-    public static void main(String[] args) {
-        long principio = System.currentTimeMillis();
-        try (FileInputStream fis = new FileInputStream(new File("prueba100MB.txt"));
+    public static ArrayList<String> leerArchivoConBuffered() throws IOException {
+        ArrayList<String> data = new ArrayList<>();
+        try (FileInputStream fis = new FileInputStream("prueba100MB.txt");
                 BufferedInputStream bis = new BufferedInputStream(fis)) {
-                    bis.read();
-        } catch (Exception e) {
+                    int i;
+                    while ((i = bis.read()) != -1) { 
+                        System.out.print((char)i);
+                    }
+        } catch (EOFException e) {
         }
-        long finaal = System.currentTimeMillis();
-        System.out.println(finaal - principio + "ms");
+        return data;
+    }
+
+    public static void main(String[] args) throws IOException {
+        // long principio = System.currentTimeMillis();
+        // try (FileInputStream fis = new FileInputStream(new File("prueba100MB.txt"));
+        //         BufferedInputStream bis = new BufferedInputStream(fis)) {
+        //             bis.read();
+        // } catch (Exception e) {
+        // }
+        // for (int i = 0; i < 100000; i++) {
+        //     System.out.println(i);
+        // }
+        // long finaal = System.currentTimeMillis();
+        // System.out.println(finaal - principio + "ms");
+
+        leerArchivoConBuffered();
     }
 }
