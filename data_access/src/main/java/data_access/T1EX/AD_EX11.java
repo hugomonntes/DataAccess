@@ -50,32 +50,19 @@ public class AD_EX11 {
         }
     }
 
-    public static ArrayList<String> leerArchivoConBuffered() throws IOException {
-        ArrayList<String> data = new ArrayList<>();
+    public static void leerArchivoConBuffered() throws IOException {
         try (FileInputStream fis = new FileInputStream("prueba100MB.txt");
                 BufferedInputStream bis = new BufferedInputStream(fis)) {
-                    int i;
-                    while ((i = bis.read()) != -1) { 
-                        System.out.print((char)i);
-                    }
+                    bis.read();
         } catch (EOFException e) {
         }
-        return data;
     }
 
     public static void main(String[] args) throws IOException {
-        // long principio = System.currentTimeMillis();
-        // try (FileInputStream fis = new FileInputStream(new File("prueba100MB.txt"));
-        //         BufferedInputStream bis = new BufferedInputStream(fis)) {
-        //             bis.read();
-        // } catch (Exception e) {
-        // }
-        // for (int i = 0; i < 100000; i++) {
-        //     System.out.println(i);
-        // }
-        // long finaal = System.currentTimeMillis();
-        // System.out.println(finaal - principio + "ms");
-
+        System.out.println(calcularTiempoDeEspera());
+        long now = System.currentTimeMillis();
         leerArchivoConBuffered();
+        long end = System.currentTimeMillis();
+        System.out.println(end - now);
     }
 }
