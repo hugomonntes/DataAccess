@@ -65,6 +65,7 @@ public class AD_EX11 {
 
     public static void main(String[] args) throws IOException {
         long now = System.currentTimeMillis();
+        @SuppressWarnings("unused")
         ArrayList<char[]> buffers = new ArrayList<>() {
             char[] buffer10 = new char[10];
             char[] buffer100 = new char[100];
@@ -72,6 +73,7 @@ public class AD_EX11 {
             char[] buffer10000 = new char[10000];
         };
         for (char[] buffer : buffers) {
+            System.out.println(buffer);
             leerArchivoConBuffered(buffer);
             // leerArchivoConFile(buffer);
         }
