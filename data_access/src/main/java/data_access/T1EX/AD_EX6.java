@@ -25,79 +25,102 @@
  */
 package data_access.T1EX;
 
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class AD_EX6 {
+    public static String leerArchivoCompleto(String nombreFichero) throws FileNotFoundException {
+        String texto = "";
+        try (Scanner sc = new Scanner(new File(nombreFichero))) {
+            while (sc.hasNextLine()) {
+                texto += sc.nextLine() + "\n";
+            }
+        }
+        return texto;
+    }
+
+    public static int calcularNumeroDeFicheros(String datos, int maxCaracteres) {
+        return (int) datos.length() / maxCaracteres;
+    }
+
+    public static String[] dividirPorCaracteres(String datos, int numeroDeFicheros, int maxCaracteres) {
+        String[] partes = new String[numeroDeFicheros];
+        int inicio = 0;
+
+        for (int i = 0; i < numeroDeFicheros; i++) {
+            int fin = inicio + maxCaracteres;
+            if (fin > datos.length()) {
+                fin = datos.length();
+            }
+            partes[i] = datos.substring(inicio, fin);
+            inicio = fin;
+        }
+        return partes;
+    }
+
+    public static void crearFicheros(String[] partes) throws IOException {
+        for (int i = 0; i < partes.length; i++) {
+            try (FileWriter fw = new FileWriter("Archivo" + i + ".txt")) {
+                fw.write(partes[i]);
+            }
+        }
+    }
+
+    public static String[] dividirPorLineas(String nombreFichero, int maxLineas) throws FileNotFoundException {
+        List<String> lineas = new ArrayList<>();
+        try (Scanner sc = new Scanner(new File(nombreFichero))) {
+            while (sc.hasNextLine()) {
+                lineas.add(sc.nextLine());
+            }
+        }
+        int numeroDeFicheros = (int) lineas.size() / maxLineas;
+
+        String[] partes = new String[numeroDeFicheros];
+        for (int i = 0; i < numeroDeFicheros; i++) {
+            String bloque = "";
+            int inicio = i * maxLineas;
+            int fin = inicio + maxLineas;
+            if (fin > lineas.size()) {
+                fin = lineas.size();
+            }
+
+            for (int j = inicio; j < fin; j++) {
+                bloque += lineas.get(j) + "\n";
+            }
+
+            partes[i] = bloque;
+        }
+
+        return partes;
+    }
+
+    public static void unirFicheros(String[] nombresFicheros, String nombreFicheroSalida) throws IOException {
+        try (FileWriter fw = new FileWriter(nombreFicheroSalida)) {
+            for (String nombre : nombresFicheros) {
+                try (Scanner sc = new Scanner(new File(nombre))) {
+                    while (sc.hasNextLine()) {
+                        fw.write(sc.nextLine() + "\n");
+                    }
+                }
+            }
+        }
+    }
+
     public static void main(String[] args) throws IOException {
-        //createFile(splitInFiles(storageDataFile("a.txt"), calculateNumFiles(storageDataFile("a.txt"), 5), 5));
-        createFile1(storageDataFileInLines("a.txt"));
-    }
-    //#region
-    static String storageDataFile (String fileName) throws FileNotFoundException {
-        String dataStorage = "";
-        try (Scanner sc = new Scanner(new File(fileName))) {
-            while (sc.hasNext()) { 
-                dataStorage += sc.nextLine();
-            }
-        }
-        return dataStorage;
-    }
+        String datos = leerArchivoCompleto("a.txt");
+        String[] partesPorCaracteres = dividirPorCaracteres(datos, calcularNumeroDeFicheros(datos, 5), 5);
+        crearFicheros(partesPorCaracteres);
 
-    static int calculateNumFiles(String dataFile, int maxChars){
-        return dataFile.length() / maxChars;
-    }
+        String[] partesPorLineas = dividirPorLineas("a.txt", 3);
+        crearFicheros(partesPorLineas);
 
-    static String[] splitInFiles(String dataFile, int numFiles, int maxChars){
-        String[] parts = new String[numFiles];
-        int start = 0;
-
-        for (int i = 0; i < numFiles; i++) {
-            int end = Math.min(start + maxChars, dataFile.length());
-            parts[i] = dataFile.substring(start, end);
-            start = end;
-            if ((end - start) < maxChars) { // FIXME
-                start += (maxChars - (start + end));
-            }
-        }
-
-        return parts;
-    }
-
-    static void createFile(String[] dataFiles) throws IOException{
-        for (int i = 0; i < dataFiles.length; i++) {
-            try (FileWriter fw = new FileWriter(String.format("file%d.txt", i))) {
-                fw.write(dataFiles[i]);
-            } catch (Exception e) {
-            }
-        }
-    }
-    //#endregion
-
-    static String[] storageDataFileInLines (String fileName) throws FileNotFoundException {
-        String dataStorage[] = new String[]{};
-        try (Scanner sc = new Scanner(new File(fileName))) {
-            int i = 0;
-            while (sc.hasNext()) { 
-                dataStorage[i] = sc.nextLine();
-                i++;
-            }
-        }
-        return dataStorage;
-    }
-
-    static void createFile1(String[] dataFiles) throws IOException{
-        for (int i = 0; i < dataFiles.length; i++) {
-            try (FileWriter fw = new FileWriter(String.format("file%d.txt", i))) {
-                fw.write(dataFiles[i]);
-                System.out.println(dataFiles[i]);
-            } catch (Exception e) {
-            }
-        }
+        String[] ficherosAUnir = { "Archivo0.txt", "Archivo1.txt", "Archivo2.txt" };
+        unirFicheros(ficherosAUnir, "ArchivoUnido.txt");
     }
 }
 
