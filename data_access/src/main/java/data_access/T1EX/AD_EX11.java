@@ -38,18 +38,19 @@ public class AD_EX11 {
     // FileOutputStream. En este último caso prueba con los siguientes tamaños de
     // buffer: 10,100,1000, …
 
-    public static void pruebaBufferStream() throws IOException{
-        try(BufferedInputStream bis = new BufferedInputStream(new FileInputStream("prueba100MB.txt"))){
-            try(BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("prueba100MB2.txt"))){
+    public static void leerArchivoConBuffered() throws IOException {
+        try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream("prueba100MB.txt"))) {
+            try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("prueba100MB2.txt"))) {
                 while ((bis.read()) != -1) {
                     bos.write(bis.read());
                 }
             }
         }
     }
-    public static void pruebaFileStream() throws IOException{
-        try(FileInputStream fis = new FileInputStream("prueba100MB.txt")){
-            try(FileOutputStream fos = new FileOutputStream("prueba100MB3.txt")){
+
+    public static void leerArchivoConFile() throws IOException {
+        try (FileInputStream fis = new FileInputStream("prueba100MB.txt")) {
+            try (FileOutputStream fos = new FileOutputStream("prueba100MB2.txt")) {
                 while (fis.read() != -1) {
                     fos.write(fis.read());
                 }
@@ -58,14 +59,10 @@ public class AD_EX11 {
     }
 
     public static void main(String[] args) throws IOException {
-        long tiempoI = System.nanoTime();
-        pruebaBufferStream();
-        long tiempoF = System.nanoTime();
-        System.out.println("Tiempo BufferedInputStream/ BufferedOutputStream: " + (tiempoF - tiempoI)/1000000 + "n/s");
-        long tiempoInicio = System.nanoTime();
-        pruebaFileStream();
-        long tiempoFinal = System.nanoTime();
-        System.out.println("Tiempo FileInputStream/FileOutputStream: " + (tiempoFinal - tiempoInicio)/1000000 + "n/s");
-
+        long now = System.currentTimeMillis();
+        leerArchivoConBuffered();
+        // leerArchivoConFile();
+        long end = System.currentTimeMillis();
+        System.out.println(end - now + "ms");
     }
 }
