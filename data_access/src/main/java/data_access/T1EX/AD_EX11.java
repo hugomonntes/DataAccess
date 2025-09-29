@@ -28,11 +28,9 @@ package data_access.T1EX;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class AD_EX11 {
     // 11. Compara la eficiencia de copiar un fichero de 100MB usando por un lado
@@ -40,29 +38,40 @@ public class AD_EX11 {
     // FileOutputStream. En este último caso prueba con los siguientes tamaños de
     // buffer: 10,100,1000, …
 
-    public static void escribirArchivoConBuffered() throws IOException {
-        try (FileOutputStream fos = new FileOutputStream("prueba100MB.txt");
-                BufferedOutputStream bos = new BufferedOutputStream(fos)) {
-                    while (true) { 
-                        // bos.write();
-                    }
-        } catch (EOFException e) {
+    public static void leerArchivoConBuffered() throws IOException {
+        try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream("prueba100MB.txt"))) {
+            try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("prueba100MB2.txt"))) {
+                while ((bis.read()) != -1) {
+                    bos.write(bis.read());
+                }
+            }
         }
     }
 
-    public static void leerArchivoConBuffered() throws IOException {
-        try (FileInputStream fis = new FileInputStream("prueba100MB.txt");
-                BufferedInputStream bis = new BufferedInputStream(fis)) {
-                    bis.read();
-        } catch (EOFException e) {
+    public static void leerArchivoConFile() throws IOException {
+        try (FileInputStream fis = new FileInputStream("prueba100MB.txt")) {
+            try (FileOutputStream fos = new FileOutputStream("prueba100MB2.txt")) {
+                while (fis.read() != -1) {
+                    fos.write(fis.read());
+                }
+            }
         }
     }
 
     public static void main(String[] args) throws IOException {
-        System.out.println(calcularTiempoDeEspera());
-        long now = System.currentTimeMillis();
+        // long now = System.currentTimeMillis();
+        // // leerArchivoConBuffered();
+        // leerArchivoConFile();
+        // long end = System.currentTimeMillis();
+        // System.out.println(end - now);
+
+        long tiempoI = System.nanoTime();
         leerArchivoConBuffered();
-        long end = System.currentTimeMillis();
-        System.out.println(end - now);
+        long tiempoF = System.nanoTime();
+        System.out.println("Tiempo BufferedInputStream/ BufferedOutputStream: " + (tiempoF - tiempoI)/1000000);
+        long tiempoInicio = System.nanoTime();
+        leerArchivoConFile();
+        long tiempoFinal = System.nanoTime();
+        System.out.println("Tiempo FileInputStream/FileOutputStream: " + (tiempoFinal - tiempoInicio)/1000000);
     }
 }
