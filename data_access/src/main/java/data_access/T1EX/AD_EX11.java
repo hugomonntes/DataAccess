@@ -31,6 +31,7 @@ import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class AD_EX11 {
     // 11. Compara la eficiencia de copiar un fichero de 100MB usando por un lado
@@ -38,21 +39,25 @@ public class AD_EX11 {
     // FileOutputStream. En este último caso prueba con los siguientes tamaños de
     // buffer: 10,100,1000, …
 
-    public static void leerArchivoConBuffered() throws IOException {
+    public static void leerArchivoConBuffered(char buffer[]) throws IOException {
         try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream("prueba100MB.txt"))) {
             try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("prueba100MB2.txt"))) {
-                while ((bis.read()) != -1) {
+                int i;
+                while ((i = bis.read()) != -1) {
                     bos.write(bis.read());
+                    buffer[i] = (char) bis.read();
                 }
             }
         }
     }
 
-    public static void leerArchivoConFile() throws IOException {
+    public static void leerArchivoConFile(char buffer[]) throws IOException {
         try (FileInputStream fis = new FileInputStream("prueba100MB.txt")) {
             try (FileOutputStream fos = new FileOutputStream("prueba100MB2.txt")) {
-                while (fis.read() != -1) {
+                int i;
+                while ((i = fis.read()) != -1) {
                     fos.write(fis.read());
+                    buffer[i] = (char) fis.read();
                 }
             }
         }
@@ -60,8 +65,16 @@ public class AD_EX11 {
 
     public static void main(String[] args) throws IOException {
         long now = System.currentTimeMillis();
-        leerArchivoConBuffered();
-        // leerArchivoConFile();
+        ArrayList<char[]> buffers = new ArrayList<>() {
+            char[] buffer10 = new char[10];
+            char[] buffer100 = new char[100];
+            char[] buffer1000 = new char[1000];
+            char[] buffer10000 = new char[10000];
+        };
+        for (char[] buffer : buffers) {
+            leerArchivoConBuffered(buffer);
+            // leerArchivoConFile(buffer);
+        }
         long end = System.currentTimeMillis();
         System.out.println(end - now + "ms");
     }
