@@ -64,18 +64,17 @@ public class AD_EX11 {
     }
 
     public static void main(String[] args) throws IOException {
-        long now = System.currentTimeMillis();
-        @SuppressWarnings("unused")
         ArrayList<Integer> tamañoBuffers = new ArrayList<>();
         tamañoBuffers.add(10);
         tamañoBuffers.add(100);
         tamañoBuffers.add(1000);
         tamañoBuffers.add(10000);
         for (int tamaño : tamañoBuffers) {
+            long now = System.currentTimeMillis();
             leerArchivoConBuffered(new char[tamaño]);
             // leerArchivoConFile(new char[tamaño]);
+            long end = System.currentTimeMillis();
+            System.out.println(end - now + "ms con el buffer de " + tamaño);
         }
-        long end = System.currentTimeMillis();
-        System.out.println(end - now + "ms");
     }
 }
