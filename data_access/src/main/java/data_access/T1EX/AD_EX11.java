@@ -3,7 +3,6 @@ package data_access.T1EX;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -26,18 +25,17 @@ public class AD_EX11 {
                 BufferedInputStream bis = new BufferedInputStream(fis)) {
                     bis.read();
         } catch (Exception e) {
-            // TODO: handle exception
         }
     }
 
     public static void main(String[] args) {
-        long principio = new Date().getTime();
+        long principio = System.currentTimeMillis();
         try (FileInputStream fis = new FileInputStream(new File("prueba100MB.txt"));
                 BufferedInputStream bis = new BufferedInputStream(fis)) {
                     bis.read();
         } catch (Exception e) {
         }
-        long finaal = new Date().getTime();
+        long finaal = System.currentTimeMillis();
         System.out.println(finaal - principio + "ms");
     }
 }
