@@ -66,16 +66,14 @@ public class AD_EX11 {
     public static void main(String[] args) throws IOException {
         long now = System.currentTimeMillis();
         @SuppressWarnings("unused")
-        ArrayList<char[]> buffers = new ArrayList<>() {
-            char[] buffer10 = new char[10];
-            char[] buffer100 = new char[100];
-            char[] buffer1000 = new char[1000];
-            char[] buffer10000 = new char[10000];
-        };
-        for (char[] buffer : buffers) {
-            System.out.println(buffer);
-            leerArchivoConBuffered(buffer);
-            // leerArchivoConFile(buffer);
+        ArrayList<Integer> tamañoBuffers = new ArrayList<>();
+        tamañoBuffers.add(10);
+        tamañoBuffers.add(100);
+        tamañoBuffers.add(1000);
+        tamañoBuffers.add(10000);
+        for (int tamaño : tamañoBuffers) {
+            leerArchivoConBuffered(new char[tamaño]);
+            // leerArchivoConFile(new char[tamaño]);
         }
         long end = System.currentTimeMillis();
         System.out.println(end - now + "ms");
