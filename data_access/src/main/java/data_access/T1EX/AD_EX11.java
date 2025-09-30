@@ -39,31 +39,30 @@ public class AD_EX11 {
     // FileOutputStream. En este último caso prueba con los siguientes tamaños de
     // buffer: 10,100,1000, …
 
-    public static void leerArchivoConBuffered(char buffer[]) throws IOException {
+    public static void leerArchivoConBuffered() throws IOException {
         try (BufferedInputStream bis = new BufferedInputStream(new FileInputStream("prueba100MB.txt"))) {
             try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("prueba100MB2.txt"))) {
-                int i;
-                while ((i = bis.read()) != -1) {
+                while ((bis.read()) != -1) {
                     bos.write(bis.read());
-                    buffer[i] = (char) bis.read();
                 }
             }
         }
     }
 
-    public static void leerArchivoConFile(char buffer[]) throws IOException {
+    public static void leerArchivoConFile(byte buffer[]) throws IOException {
         try (FileInputStream fis = new FileInputStream("prueba100MB.txt")) {
             try (FileOutputStream fos = new FileOutputStream("prueba100MB2.txt")) {
                 int i;
-                while ((i = fis.read()) != -1) {
-                    fos.write(fis.read());
-                    buffer[i] = (char) fis.read();
+                while ((i = fis.read(buffer)) != -1) {
+                    fos.write(fis.read(buffer, 0, i));
+                    
                 }
             }
         }
     }
 
     public static void main(String[] args) throws IOException {
+        leerArchivoConBuffered();
         ArrayList<Integer> tamañoBuffers = new ArrayList<>();
         tamañoBuffers.add(10);
         tamañoBuffers.add(100);
@@ -71,8 +70,7 @@ public class AD_EX11 {
         tamañoBuffers.add(10000);
         for (int tamaño : tamañoBuffers) {
             long now = System.currentTimeMillis();
-            leerArchivoConBuffered(new char[tamaño]);
-            // leerArchivoConFile(new char[tamaño]);
+            leerArchivoConFile(new byte[tamaño]);
             long end = System.currentTimeMillis();
             System.out.println(end - now + "ms con el buffer de " + tamaño);
         }
