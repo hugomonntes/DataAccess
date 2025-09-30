@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AD_EX4 {
+    @SuppressWarnings({"BoxedValueEquality", "NumberEquality"})
     public static void calcularCharMasRepetido(ArrayList<Character> chars){
         char masRepetido = ' ';
         int maxRepeticiones = 0;
@@ -47,7 +48,7 @@ public class AD_EX4 {
                 masRepetido = character;
             }
         }
-        System.out.println("Carácter más repetido: '" + masRepetido + "' con " + maxRepeticiones + " repeticiones.");
+        System.out.println("Carácter más repetido: " + masRepetido + " con " + maxRepeticiones + " repeticiones");
     }
 
     public static ArrayList<Character> leerArchivo(String nombreArchivo) {

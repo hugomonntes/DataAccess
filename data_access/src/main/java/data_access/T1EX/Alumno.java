@@ -1,3 +1,5 @@
+package data_access.T1EX;
+
 /*-
  * =====LICENSE-START=====
  * Java 11 Application
@@ -23,7 +25,6 @@
  * THE SOFTWARE.
  * =====LICENSE-END=====
  */
-package data_access.T1EX;
 
 public class Alumno {
     //     Realiza un programa que permita almacenar, de forma binaria, los datos de unos

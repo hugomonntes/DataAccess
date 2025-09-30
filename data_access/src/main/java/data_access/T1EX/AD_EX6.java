@@ -30,7 +30,6 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class AD_EX6 {
@@ -52,7 +51,7 @@ public class AD_EX6 {
         String[] partes = new String[numeroDeFicheros];
         int inicio = 0;
 
-        for (int i = 0; i < numeroDeFicheros; i++) {
+        for (int i = 0; i < numeroDeFicheros; i++) {//.Hola.Hola.aa
             int fin = inicio + maxCaracteres;
             if (fin > datos.length()) {
                 fin = datos.length();
@@ -65,14 +64,14 @@ public class AD_EX6 {
 
     public static void crearFicheros(String[] partes) throws IOException {
         for (int i = 0; i < partes.length; i++) {
-            try (FileWriter fw = new FileWriter("Archivo" + i + ".txt")) {
+            try (FileWriter fw = new FileWriter("Fichero" + i + ".txt")) {
                 fw.write(partes[i]);
             }
         }
     }
 
     public static String[] dividirPorLineas(String nombreFichero, int maxLineas) throws FileNotFoundException {
-        List<String> lineas = new ArrayList<>();
+        ArrayList<String> lineas = new ArrayList<>();
         try (Scanner sc = new Scanner(new File(nombreFichero))) {
             while (sc.hasNextLine()) {
                 lineas.add(sc.nextLine());
@@ -111,12 +110,12 @@ public class AD_EX6 {
         }
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException { // Arreglar
         String datos = leerArchivoCompleto("a.txt");
         String[] partesPorCaracteres = dividirPorCaracteres(datos, calcularNumeroDeFicheros(datos, 5), 5);
         crearFicheros(partesPorCaracteres);
 
-        String[] partesPorLineas = dividirPorLineas("a.txt", 3);
+        String[] partesPorLineas = dividirPorLineas("a.txt", 2);
         crearFicheros(partesPorLineas);
 
         String[] ficherosAUnir = { "Archivo0.txt", "Archivo1.txt", "Archivo2.txt" };
