@@ -29,6 +29,8 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 public class dom {
     public static Document creaArbol(String ruta) {
@@ -46,6 +48,23 @@ public class dom {
     }
 
     public static void main(String[] args) {
-        creaArbol("archivo.xml");
+        Document doc = creaArbol("archivo.xml");
+        Node nodoPeliculas = doc.getFirstChild();
+        NodeList pelicula = nodoPeliculas.getChildNodes();
+        NodeList hijosPelicula;
+        Node p, hijo;
+        for (int i = 0; i < pelicula.getLength(); i++) {
+            p = pelicula.item(i);
+            if (p.getNodeType() == Node.ELEMENT_NODE) {
+                System.out.println(p.getNodeName());
+                hijosPelicula = p.getChildNodes();
+                for (int j = 0; j < hijosPelicula.getLength(); j++) {
+                    hijo = hijosPelicula.item(i);
+                    if (hijo.getNodeType() == Node.ELEMENT_NODE) {
+                        System.out.println(p.getNodeName() + " - " + hijo.getTextContent());
+                    }
+                }
+            }
+        }
     }
 }
