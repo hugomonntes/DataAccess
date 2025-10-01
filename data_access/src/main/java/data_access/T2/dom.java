@@ -29,6 +29,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -53,11 +54,20 @@ public class dom {
         NodeList pelicula = nodoPeliculas.getChildNodes();
         NodeList hijosPelicula;
         Node p, hijo;
+        NamedNodeMap atributos;
+
         for (int i = 0; i < pelicula.getLength(); i++) {
             p = pelicula.item(i);
             if (p.getNodeType() == Node.ELEMENT_NODE) {
                 System.out.println(p.getNodeName());
                 hijosPelicula = p.getChildNodes();
+                if (p.hasAttributes()) {
+                    atributos = p.getAttributes();
+                    for (int j = 0; j < atributos.getLength(); j++) {
+                        System.out.println(atributos.item(j).getNodeName());
+                        System.out.println(atributos.item(j).getNodeValue());
+                    }
+                }
                 for (int j = 0; j < hijosPelicula.getLength(); j++) {
                     hijo = hijosPelicula.item(i);
                     if (hijo.getNodeType() == Node.ELEMENT_NODE) {

@@ -1,5 +1,5 @@
 <Películas>
-    <Película genero="Ciencia ficción">
+    <Película genero="Ciencia ficción" puntuacion = "8">
         <Título>Dune</Título>
         <Director>David Lynch</Director>
         <Estreno>1984</Estreno>
