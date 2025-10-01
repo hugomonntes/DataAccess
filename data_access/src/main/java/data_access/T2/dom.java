@@ -56,6 +56,13 @@ public class dom {
         Node p, hijo;
         NamedNodeMap atributos;
 
+        NodeList titulos;
+        titulos = doc.getElementsByTagName("Título");
+        for (int i = 0; i < titulos.getLength(); i++) {
+            System.out.println(titulos.item(i).getTextContent());
+        }
+
+
         for (int i = 0; i < pelicula.getLength(); i++) {
             p = pelicula.item(i);
             if (p.getNodeType() == Node.ELEMENT_NODE) {
