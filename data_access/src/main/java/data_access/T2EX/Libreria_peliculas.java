@@ -17,7 +17,7 @@ import org.w3c.dom.ls.DOMImplementationLS;
 import org.w3c.dom.ls.LSOutput;
 import org.w3c.dom.ls.LSSerializer;
 
-public class EX_peliculas {
+public class Libreria_peliculas {
     // 1. Crea un método que lea o ficheiro peliculas.xml e cree a árbore DOM.
     public static Document creaArbol(String ruta) {
         Document doc = null;
