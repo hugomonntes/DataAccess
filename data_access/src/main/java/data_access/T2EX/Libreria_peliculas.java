@@ -152,9 +152,12 @@ public class Libreria_peliculas {
     // 8. Engade a seguinte película "Depredador" dirixida en 1987 por John Tiernan
     // dentro do xénero acción. Esta en versión orixinal. Almacena esta árbore nun
     // ficheiro XML.
-    public static void añadirPelicula(Document doc, String nombre, String director, String año, String tipo) {
+    public static void añadirPelicula(Document doc, String nombre, String director, String año, String tipo,
+            String idioma) {
         Element nodoPelicula = doc.createElement("pelicula");
         nodoPelicula.setAttribute("genero", tipo);
+        nodoPelicula.setAttribute("año", año);
+        nodoPelicula.setAttribute("idioma", idioma);
         nodoPelicula.appendChild(doc.createTextNode("\n"));
 
         Element nodoTitulo = doc.createElement("titulo");
@@ -167,15 +170,32 @@ public class Libreria_peliculas {
         nodoPelicula.appendChild(nodoDirector);
         nodoPelicula.appendChild(doc.createTextNode("\n"));
 
-        Element nodoEstreno = doc.createElement("estreno");
-        nodoEstreno.appendChild(doc.createTextNode(año));
-        nodoPelicula.appendChild(nodoEstreno);
-        nodoPelicula.appendChild(doc.createTextNode("\n"));
-
         Node raiz = doc.getFirstChild();
         raiz.appendChild(nodoPelicula);
         raiz.appendChild(doc.createTextNode("\n"));
     }
+
+    // 9. Larry Wachowski cambiou o seu nome por Lana. Modifica a árbore e
+    // almacénao.
+    public static void wachowski(Document doc, String nomInicial, String nomFinal, String apellido) {
+        NodeList directores = doc.getElementsByTagName("director");
+        for (int i = 0; i < directores.getLength(); i++) {
+            Node director = directores.item(i);
+            if (director.getFirstChild().getNodeType() != Node.ELEMENT_NODE) {
+                Node nom = director.getFirstChild().getNextSibling();
+                NodeList ape = doc.getElementsByTagName("apellido");
+                for (int j = 0; j < ape.getLength(); j++) {
+                    if (ape.item(j).getTextContent().equals(apellido) && nom.getTextContent().equals(nomInicial)) {
+                        nom.setTextContent(nomFinal);
+                    }
+                }
+            }
+        }
+    }
+
+    // 10. Decatámonos que Alfredo Landa axudo a David Lynch a dirixir Dune. Engádeo
+    // como director e almacena esta modificación en nova árbore.
+
 
     public static void grabarDOM(Document document, String ficheroSalida)
             throws ClassNotFoundException, InstantiationException,
