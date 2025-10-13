@@ -195,7 +195,17 @@ public class Libreria_peliculas {
 
     // 10. Decatámonos que Alfredo Landa axudo a David Lynch a dirixir Dune. Engádeo
     // como director e almacena esta modificación en nova árbore.
-
+    public static void añadirAlfredo(Document doc, String nomDirector, String añadirDirector, String tituloPeli) {
+        NodeList peliculas = doc.getElementsByTagName("pelicula");
+        for (int i = 0; i < peliculas.getLength(); i++) {
+            Node titulo = peliculas.item(i).getFirstChild().getNextSibling();
+            if(titulo.getFirstChild().getNodeType() == Node.ELEMENT_NODE && titulo.getTextContent().equals(tituloPeli)){
+                System.out.println(titulo.getTextContent());
+                Element pelicula = (Element) titulo.getParentNode();
+                Element nuevoDirector = doc.createElement(añadirDirector);
+            }
+        }
+    }
 
     public static void grabarDOM(Document document, String ficheroSalida)
             throws ClassNotFoundException, InstantiationException,
