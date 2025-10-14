@@ -203,8 +203,13 @@ public class Libreria_peliculas {
                 System.out.println(titulo.getTextContent());
                 Element pelicula = (Element) titulo.getParentNode();
                 Element nuevoDirector = doc.createElement(añadirDirector);
+                pelicula.appendChild(nuevoDirector);
+                pelicula.appendChild(doc.createTextNode(""));
+                Element nomDir = doc.createElement("nombre");
+                // nomDir
             }
         }
+
     }
 
     public static void grabarDOM(Document document, String ficheroSalida)
