@@ -195,21 +195,39 @@ public class Libreria_peliculas {
 
     // 10. Decatámonos que Alfredo Landa axudo a David Lynch a dirixir Dune. Engádeo
     // como director e almacena esta modificación en nova árbore.
-    public static void añadirAlfredo(Document doc, String nomDirector, String añadirDirector, String tituloPeli) {
+    public static void añadirAlfredo(Document doc, String nomDirector, String apeDirector, String tituloPeli) {
         NodeList peliculas = doc.getElementsByTagName("pelicula");
         for (int i = 0; i < peliculas.getLength(); i++) {
             Node titulo = peliculas.item(i).getFirstChild().getNextSibling();
-            if(titulo.getFirstChild().getNodeType() == Node.ELEMENT_NODE && titulo.getTextContent().equals(tituloPeli)){
+            if (titulo.getFirstChild().getNodeType() != Node.ELEMENT_NODE
+                    && titulo.getTextContent().equals(tituloPeli)) {
                 System.out.println(titulo.getTextContent());
                 Element pelicula = (Element) titulo.getParentNode();
-                Element nuevoDirector = doc.createElement(añadirDirector);
+                Element nuevoDirector = doc.createElement("director");
                 pelicula.appendChild(nuevoDirector);
                 pelicula.appendChild(doc.createTextNode(""));
-                Element nomDir = doc.createElement("nombre");
-                // nomDir
+
+                Element nodoNom = (Element) nuevoDirector.appendChild(doc.createElement("nombre"));
+                nodoNom.appendChild(doc.createTextNode(nomDirector));
+                nodoNom.appendChild(doc.createTextNode(""));
+
+                Element nodoApe = (Element) nuevoDirector.appendChild(doc.createElement("apellido"));
+                nodoApe.appendChild(doc.createTextNode(apeDirector));
+                nodoApe.appendChild(doc.createTextNode(""));
             }
         }
+    }
 
+    // 11. Crea un método que permita borrar películas polo seu título.
+    public static void deleteFilmFromTitle(Document doc, String filmNameToDelete) {
+        NodeList peliculas = doc.getElementsByTagName("pelicula");
+        for (int i = 0; i < peliculas.getLength(); i++) {
+            Element pelicula = (Element) peliculas.item(i);
+            String titulo = pelicula.getElementsByTagName("titulo").item(0).getTextContent();
+            if (titulo.equals(filmNameToDelete)) {
+                pelicula.getParentNode().removeChild(pelicula);
+            }
+        }
     }
 
     public static void grabarDOM(Document document, String ficheroSalida)
@@ -236,13 +254,18 @@ public class Libreria_peliculas {
 
     public static void main(String[] args)
             throws ClassNotFoundException, InstantiationException, IllegalAccessException, FileNotFoundException {
-        String ruta = "peliculas.xml";
+        String ruta = "C:\\Users\\Hugo Montes\\Documents\\DataAccess\\data_access\\src\\main\\java\\data_access\\peliculas.xml";
+        String ruta2 = "compañia.xml";
         Document doc = creaArbol(ruta);
+        Document doc2 = creaArbol(ruta);
         // mostrarTitulos(doc);
         // mostrarPeliculas(doc);
         // contarDirectores(doc, 1);
-        añadirAtributo(doc, "El señor de los anillos", "diego costa");
+        // añadirAtributo(doc, "El Señor de los Anillos", "nom Atributo");
+        // añadirPelicula(doc, "Depredador", "Jhon", "Tiernan", "1987", "acción", "vo");
+        // wachowski(doc, "Larry", "Lana", "Wachowski");
+        // añadirAlfredo(doc, "Alfredo", "Landa", "Dune");
+        deleteFilmFromTitle(doc, "Dune");
         grabarDOM(doc, ruta);
-
     }
 }
