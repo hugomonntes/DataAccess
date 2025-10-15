@@ -2,10 +2,12 @@ package data_access.T2EX;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -16,6 +18,7 @@ import org.w3c.dom.bootstrap.DOMImplementationRegistry;
 import org.w3c.dom.ls.DOMImplementationLS;
 import org.w3c.dom.ls.LSOutput;
 import org.w3c.dom.ls.LSSerializer;
+import org.xml.sax.SAXException;
 
 public class Libreria_peliculas {
     // 1. Crea un método que lea o ficheiro peliculas.xml e cree a árbore DOM.
@@ -230,6 +233,38 @@ public class Libreria_peliculas {
         }
     }
 
+    // 12. Crea un novo documento XML replicando o seguinte:
+    // <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+    // <compañia>
+    // <empregado id="1">
+    // <nome>Juan</nome>
+    // <apelidos>López Pérez</apelidos>
+    // <alcume>Juanín</alcume >
+    // <salario>1000</salario>
+    // </ empregado >
+    // </compañia>
+    public static void crearCompañia(Document doc, String nomDoc) { // TODO
+        Element compañia = doc.createElement("compañia");
+        doc.appendChild(compañia);
+        Element empleado = doc.createElement("empleado");
+        empleado.setAttribute("id", "0"); // Parameter
+        compañia.appendChild(empleado);
+        compañia.appendChild(doc.createTextNode(""));
+        Element nombre = doc.createElement("nombre");
+        empleado.appendChild(nombre);
+        nombre.appendChild(doc.createTextNode("CARLOS ALBERTO"));
+        Element apellidos = doc.createElement("apellidos");
+        empleado.appendChild(apellidos);
+        apellidos.appendChild(doc.createTextNode("ITALIANI DA SOUSA"));
+        Element alcume = doc.createElement("alcume");
+        empleado.appendChild(alcume);
+        alcume.appendChild(doc.createTextNode("MALEANTE"));
+        Element salario = doc.createElement("salario");
+        empleado.appendChild(salario);
+        salario.appendChild(doc.createTextNode("ME DEVOLVIERON 8 EUROS"));
+        empleado.appendChild(doc.createTextNode(""));
+    }
+
     public static void grabarDOM(Document document, String ficheroSalida)
             throws ClassNotFoundException, InstantiationException,
             IllegalAccessException, FileNotFoundException {
@@ -251,20 +286,30 @@ public class Libreria_peliculas {
         // String xmlCad=serializer.writeToString(document);
     }
 
-    public static void main(String[] args)
-            throws ClassNotFoundException, InstantiationException, IllegalAccessException, FileNotFoundException {
-        String ruta = "C:\\Users\\Hugo Montes\\Documents\\DataAccess\\data_access\\src\\main\\java\\data_access\\peliculas.xml";
-        String ruta2 = "compañia.xml";
+     public static void main(String[] args)
+            throws ClassNotFoundException, InstantiationException, IllegalAccessException, ParserConfigurationException,
+            SAXException, IOException {
+        String ruta = "C:\\Users\\Hugo Montes\\Documents\\DataAccess\\data_access\\src\\main\\java\\data_access\\T2EX\\peliculas.xml";
         Document doc = creaArbol(ruta);
-        Document doc2 = creaArbol(ruta);
-        // mostrarTitulos(doc);
-        // mostrarPeliculas(doc);
-        // contarDirectores(doc, 1);
-        // añadirAtributo(doc, "El Señor de los Anillos", "nom Atributo");
-        // añadirPelicula(doc, "Depredador", "Jhon", "Tiernan", "1987", "acción", "vo");
-        // wachowski(doc, "Larry", "Lana", "Wachowski");
-        // añadirAlfredo(doc, "Alfredo", "Landa", "Dune");
-        deleteFilmFromTitle(doc, "Dune");
-        grabarDOM(doc, ruta);
+        mostrarTitulos(doc);
+        mostrarPeliculas(doc);
+        contarDirectores(doc, 1);
+        // // añadirAtributo(doc, "El Señor de los Anillos", "nom Atributo");
+        // // añadirPelicula(doc, "Depredador", "Jhon", "Tiernan", "1987", "acción", "vo");
+        // // wachowski(doc, "Larry", "Lana", "Wachowski");
+        // // añadirAlfredo(doc, "Alfredo", "Landa", "Dune");
+        // // deleteFilmFromTitle(doc, "Dune");
+        // // grabarDOM(doc, ruta);
+        // String ruta2 = "compañia.xml";
+        // Document doc2 = creaArbol(ruta2);
+        // if (doc2 == null) {
+        //     DocumentBuilderFactory factoria = DocumentBuilderFactory.newInstance();
+        //     factoria.setIgnoringComments(true);
+        //     DocumentBuilder builder = factoria.newDocumentBuilder();
+        //     doc2 = builder.newDocument();
+        // }
+        // crearCompañia(doc2, ruta2);
+        // grabarDOM(doc2, ruta2);
+
     }
 }
