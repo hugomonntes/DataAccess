@@ -245,7 +245,6 @@ public class Libreria_peliculas {
         LSSerializer serializer = ls.createLSSerializer();
         // Se establecen las propiedades del serializador
         serializer.setNewLine("\r\n");
-        ;
         serializer.getDomConfig().setParameter("format-pretty-print", true);
         // Se escribe el documento ya sea en un fichero o en una cadena de texto
         serializer.write(document, output);
