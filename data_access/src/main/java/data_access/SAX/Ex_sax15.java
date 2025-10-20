@@ -32,8 +32,11 @@ public class Ex_sax15 extends DefaultHandler {
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         super.startElement(uri, localName, qName, attributes);
         if (qName.equals("pelicula")) {
-            
-            System.out.print("<" + qName + " " + attributes.getLocalName(0) + "=" + attributes.getValue(0) + ">");
+            for (int i = 0; i < attributes.getLength(); i++) {
+                if(attributes.getLocalName(i).equals("genero")){
+                    System.out.print("<" + qName + " " + attributes.getLocalName(i) + "=\"" + attributes.getValue(i) + "\">");
+                }
+            }
         } else {
             System.out.print("<" + qName + ">");
         }
@@ -41,5 +44,4 @@ public class Ex_sax15 extends DefaultHandler {
 }
 
 // 15. Crea un "manexador " que mostre todas as películas xunto co nome e
-// apelido do
-// seu/os seus directores ademais do xénero ao que pertence.
+// apelido do seu/os seus directores ademais do xénero ao que pertence.
