@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?><filmoteca>
+<?xml version="1.0" encoding="UTF-8"?>
+<filmoteca>
     <pelicula año="2001" genero="Fantasia" idioma="es">
         <titulo>El Señor de los Anillos</titulo>
         <director>

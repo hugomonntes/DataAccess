@@ -23,38 +23,41 @@
  * THE SOFTWARE.
  * =====LICENSE-END=====
  */
-package data_access.T2EX;
+package data_access.SAX;
 
-import java.io.IOException;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
+import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
 
-public class AD_EX1 {
-    // 1. Crea un método que lea o ficheiro peliculas.xml e cree a árbore DOM.
-    public static Document creaArbol(String ruta) {
-        Document doc = null;
-        try {
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            dbf.setIgnoringComments(true);
-            DocumentBuilder builder = dbf.newDocumentBuilder();
-            doc = builder.parse(ruta);
-        } catch (IOException | ParserConfigurationException | SAXException e) {
-            System.out.println("Error generando el árbol DOM: " + e.getMessage());
-        }
-        return doc;
+public class EX_SAX extends DefaultHandler {
+    @Override
+    public void characters(char[] ch, int start, int length) throws SAXException {
+        // TODO Auto-generated method stub
+        super.characters(ch, start, length);
     }
 
-    public static void leerArchivoXML(Document doc){
-        Node raiz;
-        raiz = doc.getFirstChild();
-        System.out.println(raiz.toString());
+    @Override
+    public void endDocument() throws SAXException {
+        // TODO Auto-generated method stub
+        super.endDocument();
     }
 
-    public static void main(String[] args) {
-        leerArchivoXML(creaArbol("C:\\Users\\Hugo Montes\\Documents\\DataAccess\\data_access\\src\\main\\java\\data_access\\peliculas.xml"));
+    @Override
+    public void endElement(String uri, String localName, String qName) throws SAXException {
+        // TODO Auto-generated method stub
+        super.endElement(uri, localName, qName);
+    }
+
+    @Override
+    public void startDocument() throws SAXException {
+        // TODO Auto-generated method stub
+        super.startDocument();
+    }
+
+    @Override
+    public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+        // TODO Auto-generated method stub
+        super.startElement(uri, localName, qName, attributes);
+        System.out.println(qName);
     }
 }
