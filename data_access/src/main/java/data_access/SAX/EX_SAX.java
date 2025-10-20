@@ -33,6 +33,7 @@ public class Ex_sax extends DefaultHandler {
     @Override
     public void characters(char[] ch, int start, int length) throws SAXException {
         super.characters(ch, start, length);
+        System.out.print(new String(ch, start, length));
     }
 
     @Override
@@ -49,6 +50,7 @@ public class Ex_sax extends DefaultHandler {
     @Override
     public void startDocument() throws SAXException {
         super.startDocument();
+        System.out.println("Comezo a ler");
     }
 
     @Override
