@@ -37,7 +37,7 @@ public class getSax {
     public static void getSax(String entradaXML) throws ParserConfigurationException, SAXException, IOException {
         SAXParserFactory factory = SAXParserFactory.newInstance();
         SAXParser parser = factory.newSAXParser();
-        EX_SAX parserSax = new EX_SAX();
+        Ex_sax parserSax = new Ex_sax();
         parser.parse(entradaXML, parserSax);
     }
 
