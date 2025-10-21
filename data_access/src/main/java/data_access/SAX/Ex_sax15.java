@@ -5,6 +5,9 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class Ex_sax15 extends DefaultHandler {
+    String atributoGenero;
+    String tituloPelicula;
+
     @Override
     public void startDocument() throws SAXException {
         super.startDocument();
@@ -18,10 +21,12 @@ public class Ex_sax15 extends DefaultHandler {
     @Override
     public void characters(char[] ch, int start, int length) throws SAXException {
         super.characters(ch, start, length);
-        // if(new String(ch,start,length).equals("pelicula")){
-        //     System.out.println("a");
-        // }
-        // System.out.print(new String(ch,start,length));
+        String aa = new String(ch, start, length);
+        if (aa.equals("El Señor de los Anillos")) {
+            System.out.print(new String(ch, start, length) + " - " + atributoGenero);
+        } else {
+            System.out.print(new String(ch, start, length));
+        }
     }
 
     @Override
@@ -32,6 +37,11 @@ public class Ex_sax15 extends DefaultHandler {
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         super.startElement(uri, localName, qName, attributes);
+        for (int i = 0; i < attributes.getLength(); i++) {
+            if (attributes.getLocalName(i).equals("genero")) {
+                atributoGenero = attributes.getValue(i);
+            }
+        }
     }
 }
 
