@@ -25,15 +25,18 @@
  */
 package data_access.JSON;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.net.URL;
 
 import javax.json.Json;
 import javax.json.JsonReader;
 import javax.json.JsonValue;
+import javax.json.JsonWriter;
 import javax.net.ssl.HttpsURLConnection;
 
 public class JsonUtils {
@@ -86,7 +89,24 @@ public class JsonUtils {
         }
     }
 
-    public static void main(String[] args) {
-        System.out.println(leeJSON("https://api.football-data.org/v4/matches"));
+    public static void escribeJSON(JsonValue json, File f) throws FileNotFoundException {
+        System.out.println("Guardando tipo: " + json.getValueType());
+        PrintWriter pw = new PrintWriter(f);
+        JsonWriter writer = Json.createWriter(pw);
+        // writer.write((JsonStructure) json);
+        if (json.getValueType() == JsonValue.ValueType.OBJECT) {
+            writer.writeObject(json.asJsonObject());
+            // writer.writeObject((JsonObject)json);
+        } else if (json.getValueType() == JsonValue.ValueType.ARRAY) {
+            writer.writeArray(json.asJsonArray());
+            // writer.writeArray((JsonArray)json);
+        } else
+            System.out.println("No se soporta la escritura");
+        writer.close();
+    }
+
+    public static void main(String[] args) throws FileNotFoundException {
+        JsonValue jsonValue = leeJSON("https://pokeapi.co/api/v2/pokemon/ditto");
+        escribeJSON(jsonValue, new File("data_access\\src\\main\\java\\resources\\ditto.json"));
     }
 }
