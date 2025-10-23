@@ -114,6 +114,10 @@ public class JsonUtils {
             JsonObject pelicula = peli.asJsonObject();
             System.out.println(pelicula.getString("titulo"));
             System.out.println(pelicula.getInt("año"));
+            JsonArray interpretes = pelicula.getJsonArray("interpretes");
+            for (JsonValue interprete : interpretes) {
+                System.out.println("Interprete: " + interprete.asJsonObject().getString("nombre"));
+            }
         }
     }
 
