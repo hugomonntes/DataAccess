@@ -27,6 +27,7 @@ package data_access.JSON;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,6 +40,7 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.JsonValue;
 import javax.json.JsonWriter;
+import javax.json.stream.JsonGenerator;
 import javax.net.ssl.HttpsURLConnection;
 
 public class JsonUtils {
@@ -144,7 +146,8 @@ public class JsonUtils {
     }
 
     public static void navegarPelis() {
-        // JsonValue jsonValue = leeJSON("data_access\\src\\main\\java\\resources\\pelis.json");
+        // JsonValue jsonValue =
+        // leeJSON("data_access\\src\\main\\java\\resources\\pelis.json");
         // JsonArray raiz = jsonValue.asJsonArray();
         JsonArray raiz = creaArray();
         for (JsonValue peli : raiz) {
@@ -160,6 +163,34 @@ public class JsonUtils {
                         inter.getJsonObject("fechaNacimiento").getInt("mes"));
             }
         }
+    }
+
+    public static void generaEndisco(File f) throws FileNotFoundException {
+        JsonGenerator generator = Json.createGenerator(new FileOutputStream(f));
+        generator.writeStartArray()
+                .writeStartObject()
+                .write("titulo", "El atlas de las nubes")
+                .write("año", 2012)
+                .write("directores", "Lana Wachowski, Lilly Wachowski")
+                .writeStartArray("intepretes")
+                .writeStartObject()
+                .write("nombre", "Tom Hanks")
+                .writeStartObject("fechaNacimiento")
+                .write("año", "1956")
+                .write("mes", 8)
+                .writeEnd()
+                .writeEnd()
+                .writeStartObject()
+                .write("nombre", "Halle Berry")
+                .writeStartObject("fechaNacimiento")
+                .write("año", "1966")
+                .write("mes", 7)
+                .writeEnd()
+                .writeEnd()
+                .writeEnd()
+                .writeEnd()
+                .writeEnd()
+                .close();
     }
 
     public static void main(String[] args) throws FileNotFoundException {
