@@ -116,7 +116,11 @@ public class JsonUtils {
             System.out.println(pelicula.getInt("año"));
             JsonArray interpretes = pelicula.getJsonArray("interpretes");
             for (JsonValue interprete : interpretes) {
+                JsonObject inter = interprete.asJsonObject();
                 System.out.println("Interprete: " + interprete.asJsonObject().getString("nombre"));
+                System.out.printf("Fecha de nacimiento: año - %d, mes - %d\n",
+                        inter.getJsonObject("fechaNacimiento").getInt("año"),
+                        inter.getJsonObject("fechaNacimiento").getInt("mes"));
             }
         }
     }
