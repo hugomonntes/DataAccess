@@ -34,6 +34,8 @@ import java.io.PrintWriter;
 import java.net.URL;
 
 import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.JsonValue;
 import javax.json.JsonWriter;
@@ -105,8 +107,20 @@ public class JsonUtils {
         writer.close();
     }
 
+    public static void navegarPelis() {
+        JsonValue jsonValue = leeJSON("data_access\\src\\main\\java\\resources\\pelis.json");
+        JsonArray raiz = jsonValue.asJsonArray();
+        for (JsonValue peli : raiz) {
+            JsonObject pelicula = peli.asJsonObject();
+            System.out.println(pelicula.getString("titulo"));
+            System.out.println(pelicula.getInt("año"));
+        }
+    }
+
     public static void main(String[] args) throws FileNotFoundException {
-        JsonValue jsonValue = leeJSON("https://pokeapi.co/api/v2/pokemon/ditto");
-        escribeJSON(jsonValue, new File("data_access\\src\\main\\java\\resources\\ditto.json"));
+        // JsonValue jsonValue = leeJSON("https://pokeapi.co/api/v2/pokemon/ditto");
+        // escribeJSON(jsonValue, new
+        // File("data_access\\src\\main\\java\\resources\\ditto.json"));
+        navegarPelis();
     }
 }
