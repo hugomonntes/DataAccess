@@ -197,6 +197,6 @@ public class JsonUtils {
         // JsonValue jsonValue = leeJSON("https://pokeapi.co/api/v2/pokemon/ditto");
         // escribeJSON(jsonValue, new
         // File("data_access\\src\\main\\java\\resources\\ditto.json"));
-        navegarPelis();
+        generaEndisco(new File("data_access\\src\\main\\java\\resources\\pelis2.json"));
     }
 }
