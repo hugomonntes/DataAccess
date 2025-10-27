@@ -32,12 +32,12 @@ public class Ex2 {
     // devuelva un JsonObject con los datos devueltos de las predicciones
     // meteorológicas.
 
-    public static void searchWeatherAsLatLong(double latitud, double longitud){
+    public static JsonValue searchWeatherAsLatLong(double latitud, double longitud){
         JsonValue jValue = JsonUtils.leeJSON("http://api.openweathermap.org/data/2.5/weather?lat="+ latitud + "&lon=" + longitud +"&APPID=8f8dccaf02657071004202f05c1fdce0");
-        System.out.println(jValue);
+        return jValue;
     }
 
     public static void main(String[] args) {
-        searchWeatherAsLatLong(42.2333, 24.25555);
+        System.out.println(searchWeatherAsLatLong(42.2333, 24.25555));
     }
 }

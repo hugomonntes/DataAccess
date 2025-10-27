@@ -47,6 +47,7 @@ public class JsonUtils {
     public static JsonValue leeJSON(String ruta) {
         try {
             if (ruta.toLowerCase().startsWith("http://")) {
+                System.out.println(ruta);
                 return leerHttp(ruta);
             } else if (ruta.toLowerCase().startsWith("https://")) {
                 return leerHttps(ruta);

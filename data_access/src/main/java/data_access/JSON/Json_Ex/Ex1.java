@@ -28,11 +28,11 @@ package data_access.JSON.Json_Ex;
 import javax.json.JsonValue;
 
 public class Ex1 {
-    public static void searchWeather(String city){
+    public static JsonValue searchWeather(String city){
         JsonValue jValue = JsonUtils.leeJSON("https://api.openweathermap.org/data/2.5/weather?q=" + city + ",es&units=metric&lang=es&APPID=8f8dccaf02657071004202f05c1fdce0");
-        System.out.println(jValue);
+        return jValue;
     }
     public static void main(String[] args) {
-        searchWeather("Ourense");
+        System.out.println(searchWeather("Ourense"));
     }
 }
