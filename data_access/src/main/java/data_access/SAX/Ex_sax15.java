@@ -30,8 +30,11 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class Ex_sax15 extends DefaultHandler {
-    String atributoGenero;
-    String tituloPelicula;
+    String elemento = "";
+    String titulo = "";
+    String nombre = "";
+    String apellido = "";
+    String genero = "";
 
     @Override
     public void startDocument() throws SAXException {
@@ -41,16 +44,27 @@ public class Ex_sax15 extends DefaultHandler {
     @Override
     public void endDocument() throws SAXException {
         super.endDocument();
+        if (qName.equals("pelicula")) {
+            System.out.println("Película: " + titulo);
+            System.out.println("Director: " + nombre + " " + apellido);
+            System.out.println("Género: " + genero);
+        }
+        // elemento = "";
     }
 
     @Override
     public void characters(char[] ch, int start, int length) throws SAXException {
         super.characters(ch, start, length);
-        String aa = new String(ch, start, length);
-        if (aa.equals("El Señor de los Anillos")) {
-            System.out.print(new String(ch, start, length) + " - " + atributoGenero);
-        } else {
-            System.out.print(new String(ch, start, length));
+        String texto = new String(ch, start, length).trim();
+
+        if (texto.length() > 0) {
+            if (elemento.equals("titulo")) {
+                titulo = texto;
+            } else if (elemento.equals("nombre")) {
+                nombre = texto;
+            } else if (elemento.equals("apellido")) {
+                apellido = texto;
+            }
         }
     }
 
@@ -62,10 +76,9 @@ public class Ex_sax15 extends DefaultHandler {
     @Override
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         super.startElement(uri, localName, qName, attributes);
-        for (int i = 0; i < attributes.getLength(); i++) {
-            if (attributes.getLocalName(i).equals("genero")) {
-                atributoGenero = attributes.getValue(i);
-            }
+        elemento = qName;
+        if (qName.equals("pelicula")) {
+            genero = atts.getValue("genero");
         }
     }
 }
