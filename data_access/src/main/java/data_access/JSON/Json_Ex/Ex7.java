@@ -29,6 +29,7 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
+import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonValue;
 
@@ -44,13 +45,70 @@ public class Ex7 {
     public static String getAllData(String cityName){
         JsonValue jValue = Ex1.searchWeather(cityName);
         String dateTime = unixTimeToString((long)jValue.asJsonObject().getInt("dt"));
-        JsonObject jObj = jValue.asJsonObject();
-        JsonObject main = jObj.getJsonObject("main");
+        JsonObject all = jValue.asJsonObject();
+        JsonObject main = all.getJsonObject("main");
         double temp = (double)main.getInt("temp");
-        return dateTime + "//" + temp;
+        int humidity = main.getInt("humidity");
+        JsonArray weather = all.getJsonArray("weather");
+        String probabilidad = "";
+        for (JsonValue jsonValue : weather) {
+            JsonObject probObj = jsonValue.asJsonObject();
+            probabilidad = probObj.getString("description");
+        }
+        JsonObject wind = all.getJsonObject("wind");
+        double windSpeed = wind.getJsonNumber("speed").doubleValue();
+        JsonObject clouds = all.getJsonObject("clouds");
+        int cloudsNumber = clouds.getInt("all");
+
+        return "Fecha: " + dateTime + " | Temperatura: " + temp + " | Nubes: " + cloudsNumber + " | Humedad: " + humidity + " | Probabilidad: " + probabilidad + " | Velocidad del viento:" + windSpeed;
     }
 
     public static void main(String[] args) {
         System.out.println(getAllData("Ourense"));
     }
 }
+// pronóstico del tiempo.
+//  "coord": {
+//     "lon": -8.7226,
+//     "lat": 42.2328
+//   },
+//   "weather": [
+//     {
+//       "id": 800,
+//       "main": "Clear",
+//       "description": "cielo claro",
+//       "icon": "01d"
+//     }
+//   ],
+//   "base": "stations",
+//   "main": {
+//     "temp": 292.29,
+//     "feels_like": 291.7,
+//     "temp_min": 292.29,
+//     "temp_max": 292.29,
+//     "pressure": 1021,
+//     "humidity": 55,
+//     "sea_level": 1021,
+//     "grnd_level": 1006
+//   },
+//   "visibility": 10000,
+//   "wind": {
+//     "speed": 2.06,
+//     "deg": 260
+//   },
+//   "clouds": {
+//     "all": 0
+//   },
+//   "dt": 1761584732,
+//   "sys": {
+//     "type": 1,
+//     "id": 6440,
+//     "country": "ES",
+//     "sunrise": 1761548504,
+//     "sunset": 1761586532
+//   },
+//   "timezone": 3600,
+//   "id": 3105976,
+//   "name": "Vigo",
+//   "cod": 200
+// }
