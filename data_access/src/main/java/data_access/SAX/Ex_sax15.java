@@ -44,11 +44,11 @@ public class Ex_sax15 extends DefaultHandler {
     @Override
     public void endDocument() throws SAXException {
         super.endDocument();
-        if (qName.equals("pelicula")) {
-            System.out.println("Película: " + titulo);
-            System.out.println("Director: " + nombre + " " + apellido);
-            System.out.println("Género: " + genero);
-        }
+        // if (qName.equals("pelicula")) {
+        //     System.out.println("Película: " + titulo);
+        //     System.out.println("Director: " + nombre + " " + apellido);
+        //     System.out.println("Género: " + genero);
+        // }
         // elemento = "";
     }
 
@@ -78,7 +78,7 @@ public class Ex_sax15 extends DefaultHandler {
         super.startElement(uri, localName, qName, attributes);
         elemento = qName;
         if (qName.equals("pelicula")) {
-            genero = atts.getValue("genero");
+            // genero = atts.getValue("genero");
         }
     }
 }
