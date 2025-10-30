@@ -42,8 +42,7 @@ public class Ex7 {
         return Instant.ofEpochSecond(unixTime).atZone(ZoneId.of("GMT+1")).format(formatter);
     }
 
-    public static String getAllData(String cityName){
-        JsonValue jValue = Ex1.searchWeather(cityName);
+    public static String getAllData(JsonValue jValue){
         String dateTime = unixTimeToString((long)jValue.asJsonObject().getInt("dt"));
         JsonObject all = jValue.asJsonObject();
         JsonObject main = all.getJsonObject("main");
@@ -64,7 +63,8 @@ public class Ex7 {
     }
 
     public static void main(String[] args) {
-        System.out.println(getAllData("Ourense"));
+        JsonValue jValue = Ex1.searchWeather("Ourense");
+        System.out.println(getAllData(jValue));
     }
 }
 // pronóstico del tiempo.
