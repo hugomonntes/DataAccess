@@ -1,28 +1,3 @@
-/*-
- * =====LICENSE-START=====
- * Java 11 Application
- * ------
- * Copyright (C) 2020 - 2025 Organization Name
- * ------
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- * =====LICENSE-END=====
- */
 package data_access.SAX;
 
 import org.xml.sax.Attributes;
@@ -30,58 +5,46 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class Ex_sax15 extends DefaultHandler {
-    String elemento = "";
-    String titulo = "";
-    String nombre = "";
-    String apellido = "";
-    String genero = "";
+    private String elemento = "";
+    private String titulo = "";
+    private String nombre = "";
+    private String apellido = "";
+    private String genero = "";
 
     @Override
-    public void startDocument() throws SAXException {
-        super.startDocument();
-    }
-
-    @Override
-    public void endDocument() throws SAXException {
-        super.endDocument();
-        // if (qName.equals("pelicula")) {
-        //     System.out.println("Película: " + titulo);
-        //     System.out.println("Director: " + nombre + " " + apellido);
-        //     System.out.println("Género: " + genero);
-        // }
-        // elemento = "";
+    public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
+        elemento = qName;
+        if (qName.equals("pelicula")) {
+            titulo = "";
+            nombre = "";
+            apellido = "";
+            genero = "";
+        }
     }
 
     @Override
     public void characters(char[] ch, int start, int length) throws SAXException {
-        super.characters(ch, start, length);
         String texto = new String(ch, start, length).trim();
-
         if (texto.length() > 0) {
             if (elemento.equals("titulo")) {
-                titulo = texto;
+                titulo += texto;
             } else if (elemento.equals("nombre")) {
-                nombre = texto;
+                nombre += texto;
             } else if (elemento.equals("apellido")) {
-                apellido = texto;
+                apellido += texto;
+            } else if (elemento.equals("genero")) {
+                genero += texto;
             }
         }
     }
 
     @Override
     public void endElement(String uri, String localName, String qName) throws SAXException {
-        super.endElement(uri, localName, qName);
-    }
-
-    @Override
-    public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-        super.startElement(uri, localName, qName, attributes);
-        elemento = qName;
         if (qName.equals("pelicula")) {
-            // genero = atts.getValue("genero");
+            System.out.println("Película: " + titulo);
+            System.out.println("Director: " + nombre + " " + apellido);
+            System.out.println("Género: " + genero);
         }
+        elemento = "";
     }
 }
-
-// 15. Crea un "manexador " que mostre todas as películas xunto co nome e
-// apelido do seu/os seus directores ademais do xénero ao que pertence.

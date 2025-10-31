@@ -31,16 +31,16 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class Ex_sax16 extends DefaultHandler {
 
-    private int n;
-    private int contadorDirectores;
-    private String titulo = "";
-    private String elemento = "";
+    int n;
+    int contadorDirectores;
+    String titulo = "";
+    String elemento = "";
 
     @Override
     public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
         elemento = qName;
         if (qName.equals("pelicula")) {
-            contadorDirectores = 0; // reiniciar el contador por película
+            contadorDirectores = 0;
             titulo = "";
         } else if (qName.equals("director")) {
             contadorDirectores++;
