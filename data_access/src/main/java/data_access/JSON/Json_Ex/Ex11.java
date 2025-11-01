@@ -1,11 +1,14 @@
 package data_access.JSON.Json_Ex;
 
+import java.util.ArrayList;
+
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonValue;
 
 public class Ex11 {
-    public static void showPlaceInfo(JsonArray eventsArray) {
+    public static ArrayList<String> showPlaceInfo(JsonArray eventsArray) {
+        ArrayList<String> cityNames = new ArrayList<>();
         for (JsonValue event : eventsArray) {
             JsonObject eventObjs = event.asJsonObject();
             String eventName = eventObjs.getString("name");
@@ -15,10 +18,12 @@ public class Ex11 {
                 JsonObject venueObj = venue.asJsonObject();
                 String locationName = venueObj.getString("name");
                 JsonObject cityObj = venueObj.getJsonObject("city");
-                String cityName = cityObj.getString("name");
+                String cityName = cityObj.getString("name").replace("Palma de Mallorca", "Palma");
+                cityNames.add(cityName);
                 System.out.println(eventName + " - " + locationName + " - " + cityName);
             }
         }
+        return cityNames;
     }
 
     public static void main(String[] args) {
