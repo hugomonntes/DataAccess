@@ -1,6 +1,5 @@
 package data_access.JSON.Json_Ex;
 
-import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonValue;
