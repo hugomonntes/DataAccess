@@ -31,7 +31,7 @@ import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonValue;
 
-public class Ex11 {
+public class Ex11 { // TODO añadir fecha y hora
     public static ArrayList<String> showPlaceInfo(JsonArray eventsArray) {
         ArrayList<String> cityNames = new ArrayList<>();
         for (JsonValue event : eventsArray) {

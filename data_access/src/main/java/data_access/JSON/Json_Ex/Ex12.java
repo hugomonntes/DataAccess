@@ -62,4 +62,4 @@ public class Ex12 {
 }
 
 // 12. ¿Cuál es el tiempo actual de cada ciudad en donde se desarrollen los
-// eventos encontrados? Tengo que buscar la city y aplicar la api de weather
+// eventos encontrados?
