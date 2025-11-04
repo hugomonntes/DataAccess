@@ -37,6 +37,10 @@ public class Ex11 { // TODO añadir fecha y hora
         for (JsonValue event : eventsArray) {
             JsonObject eventObjs = event.asJsonObject();
             String eventName = eventObjs.getString("name");
+            JsonObject dates = eventObjs.getJsonObject("dates");
+            JsonObject startEvent = dates.getJsonObject("start");
+            String fecha = startEvent.getString("localDate");
+            String hora = startEvent.getString("localTime");
             JsonObject _embedded = eventObjs.getJsonObject("_embedded");
             JsonArray venues = _embedded.getJsonArray("venues");
             for (JsonValue venue : venues) {
@@ -45,7 +49,7 @@ public class Ex11 { // TODO añadir fecha y hora
                 JsonObject cityObj = venueObj.getJsonObject("city");
                 String cityName = cityObj.getString("name").replace("Palma de Mallorca", "Palma");
                 cityNames.add(cityName);
-                System.out.println(eventName + " - " + locationName + " - " + cityName);
+                System.out.println(eventName + " - " + locationName + " - " + cityName + " - " + fecha + " - " + hora);
             }
         }
         return cityNames;
