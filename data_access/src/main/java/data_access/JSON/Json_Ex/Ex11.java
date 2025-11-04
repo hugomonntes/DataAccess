@@ -31,7 +31,7 @@ import javax.json.JsonArray;
 import javax.json.JsonObject;
 import javax.json.JsonValue;
 
-public class Ex11 { // TODO añadir fecha y hora
+public class Ex11 {
     public static ArrayList<String> showPlaceInfo(JsonArray eventsArray) {
         ArrayList<String> cityNames = new ArrayList<>();
         for (JsonValue event : eventsArray) {
@@ -40,7 +40,12 @@ public class Ex11 { // TODO añadir fecha y hora
             JsonObject dates = eventObjs.getJsonObject("dates");
             JsonObject startEvent = dates.getJsonObject("start");
             String fecha = startEvent.getString("localDate");
-            String hora = startEvent.getString("localTime");
+            String hora = "";
+            try{
+                hora = startEvent.getString("localTime");
+            } catch(NullPointerException e){
+                hora = "Hora aún no establecida";
+            }
             JsonObject _embedded = eventObjs.getJsonObject("_embedded");
             JsonArray venues = _embedded.getJsonArray("venues");
             for (JsonValue venue : venues) {
