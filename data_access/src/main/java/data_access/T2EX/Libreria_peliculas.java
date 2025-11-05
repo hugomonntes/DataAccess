@@ -283,7 +283,7 @@ public class Libreria_peliculas {
         apellidos.appendChild(doc.createTextNode("ITALIANI DA SOUSA"));
         Element alcume = doc.createElement("alcume");
         empleado.appendChild(alcume);
-        alcume.appendChild(doc.createTextNode("MALEANTE"));
+        alcume.appendChild(doc.createTextNode("Info"));
         Element salario = doc.createElement("salario");
         empleado.appendChild(salario);
         salario.appendChild(doc.createTextNode("ME DEVOLVIERON 8 EUROS"));
@@ -314,27 +314,26 @@ public class Libreria_peliculas {
      public static void main(String[] args)
             throws ClassNotFoundException, InstantiationException, IllegalAccessException, ParserConfigurationException,
             SAXException, IOException {
-        String ruta = "C:\\Users\\Hugo Montes\\Documents\\DataAccess\\data_access\\src\\main\\java\\data_access\\T2EX\\peliculas.xml";
-        Document doc = creaArbol(ruta);
-        mostrarTitulos(doc);
-        mostrarPeliculas(doc);
-        contarDirectores(doc, 1);
+        // String ruta = "C:\\Users\\Hugo Montes\\Documents\\DataAccess\\data_access\\src\\main\\java\\data_access\\T2EX\\peliculas.xml";
+        // Document doc = creaArbol(ruta);
+        // mostrarTitulos(doc);
+        // mostrarPeliculas(doc);
+        // contarDirectores(doc, 1);
         // // añadirAtributo(doc, "El Señor de los Anillos", "nom Atributo");
         // // añadirPelicula(doc, "Depredador", "Jhon", "Tiernan", "1987", "acción", "vo");
         // // wachowski(doc, "Larry", "Lana", "Wachowski");
         // // añadirAlfredo(doc, "Alfredo", "Landa", "Dune");
         // // deleteFilmFromTitle(doc, "Dune");
         // // grabarDOM(doc, ruta);
-        // String ruta2 = "compañia.xml";
-        // Document doc2 = creaArbol(ruta2);
-        // if (doc2 == null) {
-        //     DocumentBuilderFactory factoria = DocumentBuilderFactory.newInstance();
-        //     factoria.setIgnoringComments(true);
-        //     DocumentBuilder builder = factoria.newDocumentBuilder();
-        //     doc2 = builder.newDocument();
-        // }
-        // crearCompañia(doc2, ruta2);
-        // grabarDOM(doc2, ruta2);
-
+        String ruta2 = "C:\\Users\\Hugo Montes\\Documents\\DataAccess\\data_access\\src\\main\\java\\data_access\\T2EX\\compañia.xml";
+        Document doc2 = creaArbol(ruta2);
+        if (doc2 == null) {
+            DocumentBuilderFactory factoria = DocumentBuilderFactory.newInstance();
+            factoria.setIgnoringComments(true);
+            DocumentBuilder builder = factoria.newDocumentBuilder();
+            doc2 = builder.newDocument();
+        }
+        crearCompañia(doc2, ruta2);
+        grabarDOM(doc2, ruta2);
     }
 }
