@@ -45,6 +45,7 @@ public class Ex_sax15 extends DefaultHandler {
             apellido = "";
             genero = "";
         }
+        System.out.println(atts.getValue(1));
     }
 
     @Override

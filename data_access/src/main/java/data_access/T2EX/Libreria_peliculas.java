@@ -268,7 +268,7 @@ public class Libreria_peliculas {
     // <salario>1000</salario>
     // </ empregado >
     // </compañia>
-    public static void crearCompañia(Document doc, String nomDoc) { // TODO
+    public static void crearCompañia(Document doc, String nomDoc) {
         Element compañia = doc.createElement("compañia");
         doc.appendChild(compañia);
         Element empleado = doc.createElement("empleado");
