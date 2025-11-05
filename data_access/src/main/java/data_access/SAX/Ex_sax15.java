@@ -39,12 +39,11 @@ public class Ex_sax15 extends DefaultHandler {
     @Override
     public void startElement(String uri, String localName, String qName, Attributes atts) throws SAXException {
         elemento = qName;
-        genero = atts.getValue(qName);
         if (qName.equals("pelicula")) {
             titulo = "";
             nombre = "";
             apellido = "";
-            genero = "";
+            genero = atts.getValue("genero");
         }
     }
 
