@@ -83,7 +83,7 @@ public class Libreria_peliculas {
             if (peliculaNode.hasAttributes()) {
                 atributos = peliculaNode.getAttributes();
                 for (int j = 0; j < atributos.getLength(); j++) {
-                    if (atributos.item(j).getNodeName() == "genero") {
+                    if ("genero".equals(atributos.item(j).getNodeName())) {
                         System.out.println("Genero: " + atributos.item(j).getTextContent());
                     }
                 }
@@ -134,7 +134,7 @@ public class Libreria_peliculas {
                 if (peliculaNode.hasAttributes()) {
                     atributos = peliculaNode.getAttributes();
                     for (int j = 0; j < atributos.getLength(); j++) {
-                        if (atributos.item(j).getNodeName() == "genero") {
+                        if ("genero".equals(atributos.item(j).getNodeName())) {
                             if (!generos.contains(atributos.item(j).getTextContent())) {
                                 generos.add(atributos.item(j).getTextContent());
                             }

@@ -48,6 +48,7 @@ public class Ex_sax15 extends DefaultHandler {
     }
 
     @Override
+    @SuppressWarnings("ConvertToStringSwitch")
     public void characters(char[] ch, int start, int length) throws SAXException {
         String texto = new String(ch, start, length).trim();
         if (texto.length() > 0) {
