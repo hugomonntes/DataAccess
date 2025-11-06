@@ -34,10 +34,10 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.SAXException;
 
 public class getSax {
-    public static void getSax(String entradaXML) throws ParserConfigurationException, SAXException, IOException {
+    public static void getSax(String entradaXML) throws ParserConfigurationException, SAXException, IOException { // TODO editar ejerc 15 aepllidos
         SAXParserFactory factory = SAXParserFactory.newInstance();
         SAXParser parser = factory.newSAXParser();
-        Ex_sax15 parserSax = new Ex_sax15();
+        Ex_sax17 parserSax = new Ex_sax17();
         parser.parse(entradaXML, parserSax);
     }
 
