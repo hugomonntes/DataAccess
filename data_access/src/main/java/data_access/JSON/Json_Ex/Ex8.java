@@ -32,26 +32,31 @@ import javax.json.JsonValue;
 import static data_access.JSON.Json_Ex.Ex7.unixTimeToString;
 
 public class Ex8 {
-    public static void getAllData(JsonValue jValue2) {
-        String dateTime = unixTimeToString((long) jValue2.asJsonObject().getInt("dt"));
-        JsonValue jValue = Ex1.searchWeather("Ourense");
-        JsonObject all = jValue.asJsonObject();
-        JsonObject main = all.getJsonObject("main");
-        double temp = (double) main.getInt("temp");
-        int humidity = main.getInt("humidity");
-        JsonArray weather = all.getJsonArray("weather");
-        String probabilidad = "";
-        for (JsonValue jsonValue : weather) {
-            JsonObject probObj = jsonValue.asJsonObject();
-            probabilidad = probObj.getString("description");
-        }
-        JsonObject wind = all.getJsonObject("wind");
-        double windSpeed = wind.getJsonNumber("speed").doubleValue();
-        JsonObject clouds = all.getJsonObject("clouds");
-        int cloudsNumber = clouds.getInt("all");
+    public static void getAllData(JsonObject j) {
+        JsonArray list = j.getJsonArray("list");
+        for (int i = 0; i < list.size(); i++) {
+            JsonObject jo = list.getJsonObject(i);
+            long fecha = jo.getInt("dt");
+            String cityName = jo.getString("name");
+            JsonObject main = jo.getJsonObject("main");
 
-        System.out.println("Temperatura: " + temp   + " | Nubes: " + cloudsNumber   + " | Humedad: " + humidity  
-                + " | Probabilidad: " + probabilidad   + " | Velocidad del viento:" + windSpeed  );
+            double temp = main.getJsonNumber("temp").doubleValue();
+            int humedad = main.getInt("humidity");
+
+            JsonObject nubes = jo.getJsonObject("clouds");
+            int prob_nubes = nubes.getInt("all");
+
+            JsonObject viento = jo.getJsonObject("wind");
+            double velocidad = viento.getJsonNumber("speed").doubleValue();
+
+            JsonArray tiempo = jo.getJsonArray("weather");
+            JsonObject pronostico = tiempo.getJsonObject(0);
+            String descripcion = pronostico.getString("description");
+
+            System.out.printf(
+                    "Ciudad: %s, Fecha: %s, Tº: %f, humedad: %d, porc.nubes: %d, vel.viento: %f, pronostico: %s\n",
+                    cityName, unixTimeToString(fecha), temp, humedad, prob_nubes, velocidad, descripcion);
+        }
     }
 
     public static void getDataProximityCity(String cityName) {
@@ -60,8 +65,7 @@ public class Ex8 {
         JsonObject coords = j.getJsonObject("coord");
         double lat = coords.getJsonNumber("lat").doubleValue();
         double lon = coords.getJsonNumber("lon").doubleValue();
-        JsonValue jValue = Ex3.searchWeatherProxy(lon + "", lat + "", "10");
-        // System.out.println(jValue);
+        JsonObject jValue = Ex3.searchWeatherProxy(lon + "", lat + "", "10").asJsonObject();
         getAllData(jValue);
     }
 
