@@ -25,10 +25,11 @@
  */
 package data_access.SAX;
 
+import java.util.ArrayList;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-import java.util.ArrayList;
 
 public class Ex_sax17 extends DefaultHandler {
 
@@ -48,5 +49,20 @@ public class Ex_sax17 extends DefaultHandler {
     public void endDocument() throws SAXException {
         System.out.println("Número de xéneros distintos: " + generos.size());
         System.out.println("Xéneros: " + generos);
+    }
+
+    @Override
+    public void startDocument() throws SAXException {
+        super.startDocument();
+    }
+
+    @Override
+    public void characters(char[] ch, int start, int length) throws SAXException {
+        super.characters(ch, start, length);
+    }
+
+    @Override
+    public void endElement(String uri, String localName, String qName) throws SAXException {
+        super.endElement(uri, localName, qName);
     }
 }

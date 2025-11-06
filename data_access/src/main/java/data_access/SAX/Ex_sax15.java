@@ -71,4 +71,14 @@ public class Ex_sax15 extends DefaultHandler {
         }
         elemento = "";
     }
+
+    @Override
+    public void endDocument() throws SAXException {
+        super.endDocument();
+    }
+
+    @Override
+    public void startDocument() throws SAXException {
+        super.startDocument();
+    }
 }
