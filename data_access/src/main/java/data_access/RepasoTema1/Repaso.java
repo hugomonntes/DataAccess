@@ -18,7 +18,7 @@ public class Repaso {
     // nombre(n).txt en la carpeta que se solicita al usuario. Dentro de cada
     // archivo debe
     // escribirse la frase: “Este es el fichero nombre(n).txt”.
-    public static void createFiles(int numberFilesToCreate, String fileName, String folderPath) throws IOException{
+    public static void createFiles(int numberFilesToCreate, String fileName, String folderPath) throws IOException {
         File newFile;
         for (int i = 0; i < numberFilesToCreate; i++) {
             newFile = new File(String.format("%s%d.txt", fileName, i));
@@ -27,6 +27,14 @@ public class Repaso {
             }
         }
     }
+
+    // 3. Crea un método que permita buscar palabras en un fichero de texto. Se debe
+    // mostrar el
+    // número de ocurrencias de dicha palabra. Utiliza un buffer para la lectura.
+    public static void searchWords(String pathName){
+
+    }
+
 
     public static void main(String[] args) {
         try {
