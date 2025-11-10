@@ -1,6 +1,8 @@
 package data_access.RepasoTema1;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -31,14 +33,21 @@ public class Repaso {
     // 3. Crea un método que permita buscar palabras en un fichero de texto. Se debe
     // mostrar el
     // número de ocurrencias de dicha palabra. Utiliza un buffer para la lectura.
-    public static void searchWords(String pathName){
-
+    public static void searchWords(String pathFile, String wordToSearch) throws FileNotFoundException{
+        try (FileReader fr = new FileReader(pathFile)) {
+            int i;
+            while ((i = fr.read()) != -1) { 
+                System.out.println((char)i);
+            }
+        } catch (IOException e) {
+        }
     }
 
 
     public static void main(String[] args) {
         try {
-            createFiles(5, "archivo", "data_access\\src\\main\\java\\data_access\\RepasoTema1\\Repaso.java");
+            //createFiles(5, "archivo", "data_access\\src\\main\\java\\data_access\\RepasoTema1\\Repaso.java");
+            searchWords("archivo0.txt", "el");
         } catch (IOException ex) {
         }
     }
