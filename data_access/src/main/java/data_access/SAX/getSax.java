@@ -37,7 +37,7 @@ public class getSax {
     public static void getSax(String entradaXML) throws ParserConfigurationException, SAXException, IOException { // TODO editar ejerc 15 aepllidos
         SAXParserFactory factory = SAXParserFactory.newInstance();
         SAXParser parser = factory.newSAXParser();
-        Ex_sax17 parserSax = new Ex_sax17();
+        Ex_sax15 parserSax = new Ex_sax15();
         parser.parse(entradaXML, parserSax);
     }
 

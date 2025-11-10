@@ -67,6 +67,7 @@ public class Ex_sax15 extends DefaultHandler {
         if (qName.equals("pelicula")) {
             System.out.println("Película: " + titulo);
             System.out.println("Director: " + nombre + " " + apellido);
+            System.out.println("Apellido");
             System.out.println("Género: " + genero);
         }
         elemento = "";
