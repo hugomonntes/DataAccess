@@ -1,7 +1,4 @@
-Este es el fichero archivo0.txt el el 
-Este es el fichero archivo0.txt el el 
-Este es el fichero archivo0.txt el el 
-Este es el fichero archivo0.txt el el 
-Este es el fichero archivo0.txt el el 
-Este es el fichero archivo0.txt el el 
-Este es el fichero archivo0.txt el el 
+AAA
+BBB
+CCC
+DDD

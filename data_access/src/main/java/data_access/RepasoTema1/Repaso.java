@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Repaso {
@@ -58,28 +60,49 @@ public class Repaso {
     // generado se
     // llamará fichero_2.txt.
     // Pista: nextLine.replaceAll(Lo que quieres borrar, Lo que quiere agregar)
-    public static void removeWordFromFile(String pathFile, String wordToRemove){
-        try (Scanner sc = new Scanner(new File(pathFile))) {
-            String[] buffer;
-            while (sc.hasNextLine()) {
-                buffer = sc.nextLine().split(" ");
-                for (String word : buffer) {
-                    if (word.equals(wordToRemove)) {
-                        
-                    }
+    public static void removeWordFromFile(String pathFileToRemove, String fileNameToCreate, String wordToRemove)
+            throws FileNotFoundException {
+        ArrayList<String> buffer = new ArrayList<>();
+        try (PrintWriter pw = new PrintWriter(new File(fileNameToCreate))) {
+            try (Scanner sc = new Scanner(new File(pathFileToRemove))) {
+                while (sc.hasNextLine()) {
+                    buffer.add(sc.nextLine().replaceAll(wordToRemove, ""));
                 }
+                for (String word : buffer) {
+                    pw.write(word + "\n");
+                }
+            } catch (Exception e) {
             }
-        } catch (Exception e) {
         }
     }
 
+    // Crea un método que encripta y otro que desencripta el contenido de un fichero
+    // de texto
+    // utilizando el código César. El cifrado César es un tipo de cifrado de
+    // sustitución en el que
+    // cada letra en el texto se desplaza un cierto número de lugares en el
+    // alfabeto. Por
+    // ejemplo, con un desplazamiento de 2, “A” se reemplazaría por “C”, “B” se
+    // convertiría en
+    // “D”. Con desplazamiento 5, “C” se reemplazaría por “H”, “E” se convertiría en
+    // “J”, etc.
+    // Se quiere que el usuario introduzca por consola este número de
+    // desplazamiento.
+    // public static String cesarCode(String wordToEncript, int numEncript){
+    //     char[] alphabet = new char[]{'a','b','c','d','e','f','g','h','i','j','k','l', 'ñ','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+    //     for (int i = 0; i < wordToEncript.length(); i++) {
+    //         for (int j = 0; j < alphabet.length; j++) {
+    //             if (wordToEncript.charAt(i) == alphabet[j]) {
+    //                 wordToEncript.charAt(i) = alphabet[j + numEncript];
+    //             }
+    //         }
+    //     }
+    // }
 
-    public static void main(String[] args) {
-        try {
-            // createFiles(5, "archivo",
-            // "data_access\\src\\main\\java\\data_access\\RepasoTema1\\Repaso.java");
-            searchWords("archivo0.txt", "el");
-        } catch (IOException ex) {
-        }
+    public static void main(String[] args) throws FileNotFoundException {
+        // createFiles(5, "archivo",
+        // "data_access\\src\\main\\java\\data_access\\RepasoTema1\\Repaso.java");
+        // searchWords("archivo0.txt", "el");
+        removeWordFromFile("archivo0.txt", "archivo1.txt", "BBB");
     }
 }
