@@ -102,6 +102,9 @@ public class Repaso {
     public static String desEncript(String wordToDesEncript, int numEncript){
         for (int i = 0; i < wordToDesEncript.length(); i++) {
             int ascii = (int) wordToDesEncript.charAt(i);
+
+
+            
         }
     }
 
