@@ -88,21 +88,28 @@ public class Repaso {
     // “J”, etc.
     // Se quiere que el usuario introduzca por consola este número de
     // desplazamiento.
-    // public static String cesarCode(String wordToEncript, int numEncript){
-    //     char[] alphabet = new char[]{'a','b','c','d','e','f','g','h','i','j','k','l', 'ñ','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
-    //     for (int i = 0; i < wordToEncript.length(); i++) {
-    //         for (int j = 0; j < alphabet.length; j++) {
-    //             if (wordToEncript.charAt(i) == alphabet[j]) {
-    //                 wordToEncript.charAt(i) = alphabet[j + numEncript];
-    //             }
-    //         }
-    //     }
-    // }
+    public static String cesarCode(String wordToEncript, int numEncript) {
+        String wordLower = wordToEncript.toLowerCase().trim();
+        String newCadena = "";
+        for (int i = 0; i < wordLower.length(); i++) {
+            int ascii = (int) wordLower.charAt(i);
+            int asciiSumado = ascii + numEncript;
+            newCadena += wordLower.replace(wordLower.charAt(i), (char) asciiSumado).charAt(i);
+        }
+        return newCadena;
+    }
+
+    public static String desEncript(String wordToDesEncript, int numEncript){
+        for (int i = 0; i < wordToDesEncript.length(); i++) {
+            int ascii = (int) wordToDesEncript.charAt(i);
+        }
+    }
 
     public static void main(String[] args) throws FileNotFoundException {
         // createFiles(5, "archivo",
         // "data_access\\src\\main\\java\\data_access\\RepasoTema1\\Repaso.java");
         // searchWords("archivo0.txt", "el");
-        removeWordFromFile("archivo0.txt", "archivo1.txt", "BBB");
+        // removeWordFromFile("archivo0.txt", "archivo1.txt", "BBB");
+        System.out.println(cesarCode("abc", 254));
     }
 }
