@@ -32,15 +32,14 @@ public class DomRepaso {
     // Crea un método que mostre todas as películas xunto co nome e apelido do
     // seu/os
     // seus directores ademais do xénero ao que pertence.
-    public static void mostrarPeliculasConDirector(Document doc){
+    public static void mostrarPeliculasConDirector(Document doc) {
         NodeList titulos = doc.getElementsByTagName("titulo");
         for (int i = 0; i < titulos.getLength(); i++) {
+            String titulo = titulos.item(i).getTextContent();
+            System.out.println(titulo);
             NodeList director = doc.getElementsByTagName("director");
-            for (int j = 0; j < director.item(i).getChildNodes().getLength(); j++) {
-                Node nombre = director.item(i).getChildNodes().item(j);
-                String titulo = titulos.item(j).getTextContent();
-                System.out.println(String.format("%s - %s",titulo,nombre.getTextContent()));
-            }
+            System.out.println(director.item(i).getChildNodes().item(1).getTextContent());
+            System.out.println(director.item(i).getChildNodes().item(3).getTextContent());
         }
     }
 
