@@ -99,14 +99,14 @@ public class Repaso {
         return newCadena;
     }
 
-    public static String desEncript(String wordToDesEncript, int numEncript){
-        for (int i = 0; i < wordToDesEncript.length(); i++) {
-            int ascii = (int) wordToDesEncript.charAt(i);
+    // public static String desEncript(String wordToDesEncript, int numEncript){
+    //     for (int i = 0; i < wordToDesEncript.length(); i++) {
+    //         int ascii = (int) wordToDesEncript.charAt(i);
 
 
             
-        }
-    }
+    //     }
+    // }
 
     public static void main(String[] args) throws FileNotFoundException {
         // createFiles(5, "archivo",
