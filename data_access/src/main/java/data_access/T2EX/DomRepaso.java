@@ -4,6 +4,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -43,8 +44,23 @@ public class DomRepaso {
         }
     }
 
+    // 5. Crea un método que mostre as películas que teñen máis n directores. Sendo
+    // n un
+    // parámetro que se lle pasa o método.
+    public static void mostrarPeliculas(Document doc, int numeroMaximoDirectores) {
+        NodeList listaPeliculas = doc.getElementsByTagName("pelicula");
+        for (int i = 0; i < listaPeliculas.getLength(); i++) {
+            Element pelicula = (Element) listaPeliculas.item(i);
+            String titulo = pelicula.getElementsByTagName("titulo").item(0).getTextContent();
+            NodeList directores = pelicula.getElementsByTagName("director");
+            if (directores.getLength() < numeroMaximoDirectores) {
+                System.out.println("Película: " + titulo + " Directores: " + directores.getLength());
+            }
+        }
+    }
+
     public static void main(String[] args) {
         // mostrarTitulos(creaArbol("peliculas.xml"));
-        mostrarPeliculasConDirector(creaArbol("peliculas.xml"));
+        mostrarPeliculas(creaArbol("peliculas.xml"), 2);
     }
 }
