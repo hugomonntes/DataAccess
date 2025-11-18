@@ -13,8 +13,12 @@ public class getSax {
         SAXParserFactory factory = SAXParserFactory.newInstance();
         SAXParser parser = factory.newSAXParser();
 
-        sax1 aa = new sax1();
-        parser.parse(entradaXML, aa);
+        sax1 e1 = new sax1();
+        parser.parse(entradaXML, e1);
+        System.out.println();
+
+        sax2 e2 = new sax2();
+        parser.parse(entradaXML, e2);
         System.out.println();
     }
 
