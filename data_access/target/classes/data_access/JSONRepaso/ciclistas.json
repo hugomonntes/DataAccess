@@ -1,0 +1,78 @@
+{
+  "tema": "Ciclistas Históricos",
+  "descripcion": "Listado de ciclistas legendarios que marcaron la historia del ciclismo profesional.",
+  "ciclistas": [
+    {
+      "nombre": "Eddy Merckx",
+      "apodo": "El Caníbal",
+      "pais": "Bélgica",
+      "años_actividad": "1961-1978",
+      "logros_destacados": {
+        "tour_de_francia": 5,
+        "giro_de_italia": 5,
+        "vuelta_a_españa": 1,
+        "mundiales": 3
+      },
+      "equipos": ["Faema", "Molteni"]
+    },
+    {
+      "nombre": "Miguel Indurain",
+      "apodo": "Big Mig",
+      "pais": "España",
+      "años_actividad": "1985-1996",
+      "logros_destacados": {
+        "tour_de_francia": 5,
+        "giro_de_italia": 2,
+        "vuelta_a_españa": 0,
+        "mundiales_crono": 1
+      },
+      "equipos": ["Banesto"]
+    },
+    {
+      "nombre": "Bernard Hinault",
+      "apodo": "El Tejón",
+      "pais": "Francia",
+      "años_actividad": "1974-1986",
+      "logros_destacados": {
+        "tour_de_francia": 5,
+        "giro_de_italia": 3,
+        "vuelta_a_españa": 2
+      },
+      "equipos": ["Renault–Elf", "La Vie Claire"]
+    },
+    {
+      "nombre": "Fausto Coppi",
+      "apodo": "Il Campionissimo",
+      "pais": "Italia",
+      "años_actividad": "1939-1959",
+      "logros_destacados": {
+        "tour_de_francia": 2,
+        "giro_de_italia": 5,
+        "vuelta_a_españa": 0
+      },
+      "equipos": ["Bianchi"]
+    },
+    {
+      "nombre": "Marco Pantani",
+      "apodo": "El Pirata",
+      "pais": "Italia",
+      "años_actividad": "1992-2003",
+      "logros_destacados": {
+        "tour_de_francia": 1,
+        "giro_de_italia": 1
+      },
+      "equipos": ["Mercatone Uno"]
+    },
+    {
+      "nombre": "Iago Doval",
+      "apodo": "El Puto Amo",
+      "pais": "Ourense",
+      "años_actividad": "1999-2025",
+      "logros_destacados": {
+        "tour_de_francia": 10,
+        "giro_de_italia": 7
+      },
+      "equipos": ["Ourense Academy"]
+    }
+  ]
+}

@@ -20,6 +20,14 @@ public class getSax {
         sax2 e2 = new sax2();
         parser.parse(entradaXML, e2);
         System.out.println();
+
+        sax3 e3 = new sax3();
+        parser.parse(entradaXML, e3);
+        System.out.println();
+
+        sax4 e4 = new sax4();
+        parser.parse(entradaXML, e4);
+        System.out.println();
     }
 
     public static void main(String[] args) throws ParserConfigurationException, SAXException, IOException {
