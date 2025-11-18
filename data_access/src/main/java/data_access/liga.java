@@ -1,16 +1,21 @@
 package data_access;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.glassfish.json.JsonUtil;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+import data_access.JSON.Json_Ex.JsonUtils;
+import data_access.T2EX.ModificarDOM;
 
 public class liga {
     public static Document creaArbol(String ruta) {
@@ -100,12 +105,23 @@ public class liga {
         System.out.println(local + " - " + visitante);
     }
 
-    public static void main(String[] args) {
-        añoDeLiga(creaArbol("liga.xml"));
-        contarPartidosJornada(creaArbol("liga.xml"));
-        equiposFechaPartido(creaArbol("liga.xml"));
-        equipoMasGoleador(creaArbol("liga.xml"));
-        partidoColista(creaArbol("liga.xml"));
+    public static void añadirElemento(Document doc, int horass){
+        NodeList compe = doc.getElementsByTagName("competicion");
+        Element duracion = doc.createElement("duracion");
+        compe.item(0).appendChild(duracion);
+        duracion.appendChild(doc.createTextNode("\n"));
+        // Node horas = duracion.appendChild(doc.createElement("horas"));
+        // horas.setTextContent(horass + "");
+    }
+
+    public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, FileNotFoundException {
+        // añoDeLiga(creaArbol("liga.xml"));
+        // contarPartidosJornada(creaArbol("liga.xml"));
+        // equiposFechaPartido(creaArbol("liga.xml"));
+        // equipoMasGoleador(creaArbol("liga.xml"));
+        // partidoColista(creaArbol("liga.xml"));
+        añadirElemento(creaArbol("liga.xml"), 5);
+        ModificarDOM.grabarDOM(creaArbol("liga.xml"), "aa.xml");
     }
 }
 
