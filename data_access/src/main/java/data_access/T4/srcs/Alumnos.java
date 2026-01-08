@@ -1,7 +1,10 @@
+package data_access.T4.srcs;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -172,9 +175,98 @@ public class Alumnos {
     // 8. Quememos crear un método que pasándole cuatro parámetros (tabla, nombre
     // de campo, tipo de dato, propiedades) nos permita añadir una columna a una
     // tabla.
-    public static void añadirColumna(String nombreTabla, String nombreCampo, int tipoDato, String propiedades){
-        
+    public static void añadirColumna(String nombreTabla, String nombreCampo, int tipoDato, String propiedades) {
+        String query = String.format("ALTER TABLE %s ADD %s %d %s", nombreTabla, nombreCampo, tipoDato, propiedades);
+        try (Statement stm = conexion.createStatement()) {
+            stm.executeUpdate(query);
+        } catch (Exception e) {
+        }
     }
+
+    // 10. Queremos obtener los siguientes datos de las columnas devueltas por la
+    // consulta "select *, nombre as non from alumnos": Nombre de la columna, alias
+    // de la columna, nombre del tipo de dato usado en la columna, si es
+    // autoincrementado y si permite nulos.
+    public static void mostrarDatos() {
+        try (Statement stm = conexion.createStatement()) {
+            String query = "select *, nombre as non from alumnos";
+            ResultSet rs = stm.executeQuery(query);
+            ResultSetMetaData rsmd = rs.getMetaData();
+            for (int i = 1; i < rsmd.getColumnCount(); i++) {
+                System.out.println(rsmd.getColumnName(i) + " - " + rsmd.getColumnTypeName(i) + " - "
+                        + rsmd.isAutoIncrement(i) + " - " + rsmd.isNullable(i));
+            }
+        } catch (Exception e) {
+        }
+    }
+
+    // 12. Queremos insertar un grupo de alumnos garantizando que, si alguna
+    // inserción
+    // falla, la base de datos quede en el estado inicial. ¿Cómo podernos realizar
+    // esta
+    // tarea?. Indica dos ejemplo que utilice esta facilidad (comprobando que el
+    // SGBD
+    // la soporta): Uno que su ejecución no produzca error y otro que si y, en este
+    // caso, se deshagan todas las modificaciones de se hayan realizado a la base de
+    // datos y se indique el código de error generado. ¿Conoces alguna forma que
+    // evitar tener que deshacer todos los cambios?
+    public static void insertarGrupoAlumnos() {
+        try (Statement stm = conexion.createStatement()) {
+            stm.executeUpdate("INSERT INTO alumnos (nombre, apellidos, altura, aula) VALUES ('Hugo','M',170,21)");
+            stm.executeUpdate(
+                    "INSERT INTO alumnos (nombre, apellidos, altura, aula) VALUES ('Carlos','Alberto',175,21)");
+            System.out.println("Inserciones realizadas con éxito");
+        } catch (Exception e) {
+            System.out.println("Error en la inserción: " + e.getLocalizedMessage());
+        }
+    }
+
+    // 9. Mediante DatabaseMetaData (y métodos similares) queremos obtener cierta
+    // información de la base de datos y de las tablas que contiene la base de
+    // datos:
+    // a. Obtén los siguientes datos de la base de datos: Nombre del driver, versión
+    // del driver, url de conexión, usuario con el que estamos conectados a la base
+    // de datos, el nombre del SGBD, versión del SGBD y las palabras reservadas
+    // que tienen el SGBD.
+    public static void getInfo(String bd) {
+        try {
+            java.sql.DatabaseMetaData dbmd = conexion.getMetaData();
+            System.out.println("Nombre del driver: " + dbmd.getDriverName());
+            System.out.println("Versión del driver: " + dbmd.getDriverVersion());
+            System.out.println("URL de conexión: " + dbmd.getURL());
+            System.out.println("Usuario conectado: " + dbmd.getUserName());
+            System.out.println("Nombre del SGBD: " + dbmd.getDatabaseProductName());
+            System.out.println("Versión del SGBD: " + dbmd.getDatabaseProductVersion());
+            System.out.println("Palabras reservadas: " + dbmd.getSQLKeywords());
+        } catch (SQLException e) {
+            System.out.println("Error al obtener la información de la base de datos: " + e.getLocalizedMessage());
+        }
+    }
+
+    // b. Obtén todas las bases de datos (Catalogs) del SGBD.
+    public static void getCatalogs() {
+        try {
+            java.sql.DatabaseMetaData dbmd = conexion.getMetaData();
+            ResultSet rs = dbmd.getCatalogs();
+            System.out.println("Bases de datos disponibles:");
+            while (rs.next()) {
+                String catalog = rs.getString("TABLE_CAT");
+                System.out.println("- " + catalog);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener las bases de datos: " + e.getLocalizedMessage());
+        }
+    }
+    // c. Para todas las tablas de la base datos ADD obtén: el nombre de las tabla y
+    // el tipo de tabla.
+    // d. Repite el ejercicio anterior pero solo mostrando las vistas.
+    // e. Combina en uno solo los ejercicios b y c.
+    // f. Obtén todos los procedimientos almacenados de la base de datos ADD.
+    // g. Mediante getColumns obtén de las tablas de la base de datos ADD que
+    // comiencen por 'a' los siguientes datos: posición de la columna, base de
+    // datos, tabla, nombre de la columna, nombre del tipo de dato de la columna,
+    // tamaño de la columna y si permite nulos. Indica también si has encontrado
+    // alguna tabla con un campo autoincrementado.
 
     public static void main(String[] args) throws SQLException {
         abrirConexion("add", "localhost", "root", "");
@@ -190,10 +282,12 @@ public class Alumnos {
         // consultaNombreAlumno("%o%", 182);
         // consultaNombreAlumno2("o", 180);
         // System.out.println(calcularTiempos() + "ms");
-        ArrayList<Object> tiempos = calcularTiempos();
-        for (Object tiempo : tiempos) {
-            System.out.println(tiempo + "ms");
-        }
+        // ArrayList<Object> tiempos = calcularTiempos();
+        // for (Object tiempo : tiempos) {
+        // System.out.println(tiempo + "ms");
+        // }
+        // mostrarDatos();
+        insertarGrupoAlumnos();
         cerrarConexion();
     }
 }
