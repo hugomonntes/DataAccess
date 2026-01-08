@@ -1,6 +1,5 @@
-package data_access.T4.srcs;
-
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -230,7 +229,7 @@ public class Alumnos {
     // que tienen el SGBD.
     public static void getInfo(String bd) {
         try {
-            java.sql.DatabaseMetaData dbmd = conexion.getMetaData();
+            DatabaseMetaData dbmd = conexion.getMetaData();
             System.out.println("Nombre del driver: " + dbmd.getDriverName());
             System.out.println("Versión del driver: " + dbmd.getDriverVersion());
             System.out.println("URL de conexión: " + dbmd.getURL());
@@ -246,7 +245,7 @@ public class Alumnos {
     // b. Obtén todas las bases de datos (Catalogs) del SGBD.
     public static void getCatalogs() {
         try {
-            java.sql.DatabaseMetaData dbmd = conexion.getMetaData();
+            DatabaseMetaData dbmd = conexion.getMetaData();
             ResultSet rs = dbmd.getCatalogs();
             System.out.println("Bases de datos disponibles:");
             while (rs.next()) {
@@ -257,16 +256,136 @@ public class Alumnos {
             System.out.println("Error al obtener las bases de datos: " + e.getLocalizedMessage());
         }
     }
+
     // c. Para todas las tablas de la base datos ADD obtén: el nombre de las tabla y
     // el tipo de tabla.
+    public static void getTables() {
+        try {
+            DatabaseMetaData dbmd = conexion.getMetaData();
+            ResultSet rs = dbmd.getTables("add", null, "%", null);
+            System.out.println("Tablas en la base de datos ADD:");
+            while (rs.next()) {
+                String tableName = rs.getString("TABLE_NAME");
+                String tableType = rs.getString("TABLE_TYPE");
+                System.out.println(tableName + " (" + tableType + ")");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener las tablas: " + e.getLocalizedMessage());
+        }
+    }
+
     // d. Repite el ejercicio anterior pero solo mostrando las vistas.
+    public static void getViews() {
+        try {
+            DatabaseMetaData dbmd = conexion.getMetaData();
+            ResultSet rs = dbmd.getTables("add", null, "%", new String[] { "VIEW" });
+            while (rs.next()) {
+                String tableName = rs.getString("TABLE_NAME");
+                String tableType = rs.getString("TABLE_TYPE");
+                System.out.println(tableName + " (" + tableType + ")");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener las tablas: " + e.getLocalizedMessage());
+        }
+    }
+
     // e. Combina en uno solo los ejercicios b y c.
+    public static void getCatalogsAndTables() {
+        try {
+            DatabaseMetaData dbmd = conexion.getMetaData();
+            ResultSet catalogs = dbmd.getCatalogs();
+            System.out.println("Bases de datos y sus tablas:");
+            while (catalogs.next()) {
+                String catalog = catalogs.getString("TABLE_CAT");
+                System.out.println("Base de datos: " + catalog);
+                ResultSet tables = dbmd.getTables(catalog, null, "%", null);
+                while (tables.next()) {
+                    String tableName = tables.getString("TABLE_NAME");
+                    String tableType = tables.getString("TABLE_TYPE");
+                    System.out.println(" - " + tableName + " (" + tableType + ")");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener las bases de datos y tablas: " + e.getLocalizedMessage());
+        }
+    }
+
     // f. Obtén todos los procedimientos almacenados de la base de datos ADD.
+    public static void getStoredProcedures() {
+        try {
+            DatabaseMetaData dbmd = conexion.getMetaData();
+            ResultSet rs = dbmd.getProcedures("add", null, "%");
+            System.out.println("Procedimientos almacenados en la base de datos ADD:");
+            while (rs.next()) {
+                String procedureName = rs.getString("PROCEDURE_NAME");
+                System.out.println("- " + procedureName);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener los procedimientos almacenados: " + e.getLocalizedMessage());
+        }
+    }
+
     // g. Mediante getColumns obtén de las tablas de la base de datos ADD que
     // comiencen por 'a' los siguientes datos: posición de la columna, base de
     // datos, tabla, nombre de la columna, nombre del tipo de dato de la columna,
     // tamaño de la columna y si permite nulos. Indica también si has encontrado
     // alguna tabla con un campo autoincrementado.
+    public static void getColumnsInfo() {
+        try {
+            DatabaseMetaData dbmd = conexion.getMetaData();
+            ResultSet tables = dbmd.getTables("add", null, "a%", null);
+            while (tables.next()) {
+                String tableName = tables.getString("TABLE_NAME");
+                System.out.println("Tabla: " + tableName);
+                ResultSet columns = dbmd.getColumns("add", null, tableName, "%");
+                while (columns.next()) {
+                    int position = columns.getInt("ORDINAL_POSITION");
+                    String columnName = columns.getString("COLUMN_NAME");
+                    String typeName = columns.getString("TYPE_NAME");
+                    int columnSize = columns.getInt("COLUMN_SIZE");
+                    String isNullable = columns.getString("IS_NULLABLE");
+                    String isAutoIncrement = columns.getString("IS_AUTOINCREMENT");
+                    System.out.println(String.format(
+                            " - Posición: %d, Columna: %s, Tipo: %s, Tamaño: %d, Permite nulos: %s, Autoincrementado: %s",
+                            position, columnName, typeName, columnSize, isNullable, isAutoIncrement));
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener la información de las columnas: " + e.getLocalizedMessage());
+        }
+    }
+
+    // 13. Queremos leer y almacenar objetos binarios en una base de datos. Para
+    // ello
+    // vamos a obtener y guardar imágenes en la tabla imágenes de la base de datos
+    // AD.
+    // a. Vamos a obtener una imagen desde la base de datos y almacenarla en el
+    // disco duro. Para ello usamos el método getBinaryStream. Este método
+    // devuelve un objeto de tipo InputStream. Del cual tendremos que ir leyendo
+    // bytes y almacenándolos en un archivo binario del disco duro.
+    public static void almacenarImagen(){
+        try (Statement stm = conexion.createStatement()) {
+            // stm.getBinaryStream("");
+        } catch (SQLException e) {
+        }
+    }
+    // b. Vamos ahora a almacenar una imagen que está guardada en el disco duro en
+    // la base de datos. Para ello creamos una sentencia preparada para insertar
+    // datos en la tabla imágenes. Para establecer el elemento binario usamos el
+    // método setBinaryStream con los siguientes argumentos: posición del campo
+    // imagen, objeto de tipo FileImputStream (que apunta a la imagen que
+    // queremos insertar) y número de bytes que vamos a escribir.
+    
+    // 15. Crea un método que ejecute el procedimiento almacenado getAulas y la
+    // función
+    // Suma de la base de datos Add. Visualiza los datos que devuelven.
+
+    // 16. Realiza un método que permita buscar una cadena de texto en cualquier
+    // columna de tipo char o varchar de cualquier tabla de una base datos dada.
+    // Debe
+    // indicar la base de datos, tabla y columna donde se encontró la coincidencia y
+    // el
+    // texto completo del campo
 
     public static void main(String[] args) throws SQLException {
         abrirConexion("add", "localhost", "root", "");
@@ -287,7 +406,9 @@ public class Alumnos {
         // System.out.println(tiempo + "ms");
         // }
         // mostrarDatos();
-        insertarGrupoAlumnos();
+        // insertarGrupoAlumnos();
+        // getTables();
+        getViews();
         cerrarConexion();
     }
 }
