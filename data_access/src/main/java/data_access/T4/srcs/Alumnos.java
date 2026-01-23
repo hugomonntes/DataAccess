@@ -411,14 +411,53 @@ public class Alumnos {
     // 15. Crea un método que ejecute el procedimiento almacenado getAulas y la
     // función
     // Suma de la base de datos Add. Visualiza los datos que devuelven.
-    
+    public static void ejecutarProcedimientoYFuncion() {
+        try (Statement stm = conexion.createStatement()) {
+            ResultSet rs = stm.executeQuery("CALL getAulas()");
+            System.out.println("Aulas:");
+            while (rs.next()) {
+                System.out.println("- " + rs.getString("nombreAula"));
+            }
+            rs = stm.executeQuery("SELECT Suma(5, 10) AS resultado");
+            if (rs.next()) {
+                System.out.println("Resultado de la función Suma: " + rs.getInt("resultado"));
+            }
+        } catch (SQLException e) {
+        }
+    }
     // 16. Realiza un método que permita buscar una cadena de texto en cualquier
     // columna de tipo char o varchar de cualquier tabla de una base datos dada.
     // Debe
     // indicar la base de datos, tabla y columna donde se encontró la coincidencia y
     // el
     // texto completo del campo
-    
+    public static void buscarCadenaEnBaseDatos(String cadenaBuscada) {
+        try {
+            DatabaseMetaData dbmd = conexion.getMetaData();
+            ResultSet tables = dbmd.getTables(null, null, "%", new String[] { "TABLE" });
+            while (tables.next()) {
+                String tableName = tables.getString("TABLE_NAME");
+                ResultSet columns = dbmd.getColumns(null, null, tableName, "%");
+                while (columns.next()) {
+                    String columnName = columns.getString("COLUMN_NAME");
+                    String typeName = columns.getString("TYPE_NAME");
+                    if (typeName.equalsIgnoreCase("CHAR") || typeName.equalsIgnoreCase("VARCHAR")) {
+                        String query = String.format("SELECT * FROM %s WHERE %s LIKE ?", tableName, columnName);
+                        try (PreparedStatement ps = conexion.prepareStatement(query)) {
+                            ps.setString(1, "%" + cadenaBuscada + "%");
+                            ResultSet rs = ps.executeQuery();
+                            while (rs.next()) {
+                                System.out.println(String.format("Base de datos: %s, Tabla: %s, Columna: %s, Valor: %s",
+                                        conexion.getCatalog(), tableName, columnName,
+                                        rs.getString(columnName)));
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+        }
+    }
 
     public static void main(String[] args) throws SQLException {
         abrirConexion("add", "localhost", "root", "");
@@ -443,6 +482,8 @@ public class Alumnos {
         // getTables();
         getViews();
         cerrarConexion();
+        ejecutarProcedimientoYFuncion();
+        buscarCadenaEnBaseDatos("a");
     }
 }
 
