@@ -1,5 +1,10 @@
 package data_access.T4.srcs;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -366,8 +371,21 @@ public class Alumnos {
     // devuelve un objeto de tipo InputStream. Del cual tendremos que ir leyendo
     // bytes y almacenándolos en un archivo binario del disco duro.
     public static void almacenarImagen(){
-        try (Statement stm = conexion.createStatement()) {
-            
+        try (Statement st = conexion.createStatement()) {
+            ResultSet rs = st.executeQuery("SELECT * FROM imagenes WHERE nombre = 'escritor1.jpg'");
+            while (rs.next()) {
+                InputStream is = rs.getBinaryStream("imagen");
+                try (FileOutputStream fos = new FileOutputStream("C:\\imagenes\\imagen.jpg")) {
+                    int i;
+                    byte[] buffer = new byte[1024];
+                    while ((i = is.read(buffer)) != -1) {
+                        fos.write(buffer, 0, i);
+                    }
+                    is.close();
+                } catch (IOException e) {
+
+                }
+            }
         } catch (SQLException e) {
         }
     }
@@ -378,12 +396,22 @@ public class Alumnos {
     // imagen, objeto de tipo FileImputStream (que apunta a la imagen que
     // queremos insertar) y número de bytes que vamos a escribir.
     public static void insertarImagen(){
-
+        String query = "INSERT INTO imagenes (nombre, imagen) VALUES (?, ?)";
+        try (PreparedStatement ps = conexion.prepareStatement(query)) {
+            File file = new File("C:\\imagenes\\escritor1.jpg");
+            try (FileInputStream fis = new FileInputStream(file)) {
+                ps.setString(1, "escritor1.jpg");
+                ps.setBinaryStream(2, fis, (int) file.length());
+                ps.executeUpdate();
+            } catch (IOException e) {
+            }
+        } catch (SQLException e) {
+        }
     }
     // 15. Crea un método que ejecute el procedimiento almacenado getAulas y la
     // función
     // Suma de la base de datos Add. Visualiza los datos que devuelven.
-
+    
     // 16. Realiza un método que permita buscar una cadena de texto en cualquier
     // columna de tipo char o varchar de cualquier tabla de una base datos dada.
     // Debe
