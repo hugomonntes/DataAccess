@@ -1,3 +1,5 @@
+package data_access.T4.srcs;
+
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -365,7 +367,7 @@ public class Alumnos {
     // bytes y almacenándolos en un archivo binario del disco duro.
     public static void almacenarImagen(){
         try (Statement stm = conexion.createStatement()) {
-            // stm.getBinaryStream("");
+            
         } catch (SQLException e) {
         }
     }
@@ -375,7 +377,9 @@ public class Alumnos {
     // método setBinaryStream con los siguientes argumentos: posición del campo
     // imagen, objeto de tipo FileImputStream (que apunta a la imagen que
     // queremos insertar) y número de bytes que vamos a escribir.
-    
+    public static void insertarImagen(){
+
+    }
     // 15. Crea un método que ejecute el procedimiento almacenado getAulas y la
     // función
     // Suma de la base de datos Add. Visualiza los datos que devuelven.
