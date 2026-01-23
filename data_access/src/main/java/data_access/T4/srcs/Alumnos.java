@@ -418,6 +418,7 @@ public class Alumnos {
     // indicar la base de datos, tabla y columna donde se encontró la coincidencia y
     // el
     // texto completo del campo
+    
 
     public static void main(String[] args) throws SQLException {
         abrirConexion("add", "localhost", "root", "");
