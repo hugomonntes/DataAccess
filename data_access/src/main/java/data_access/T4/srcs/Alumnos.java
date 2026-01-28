@@ -217,13 +217,25 @@ public class Alumnos {
     // datos y se indique el código de error generado. ¿Conoces alguna forma que
     // evitar tener que deshacer todos los cambios?
     public static void insertarGrupoAlumnos() {
-        try (Statement stm = conexion.createStatement()) {
-            stm.executeUpdate("INSERT INTO alumnos (nombre, apellidos, altura, aula) VALUES ('Hugo','M',170,21)");
-            stm.executeUpdate(
-                    "INSERT INTO alumnos (nombre, apellidos, altura, aula) VALUES ('Carlos','Alberto',175,21)");
-            System.out.println("Inserciones realizadas con éxito");
-        } catch (Exception e) {
-            System.out.println("Error en la inserción: " + e.getLocalizedMessage());
+        try {
+            conexion.setAutoCommit(false);
+            try (Statement stm = conexion.createStatement()) {
+                stm.executeUpdate(
+                        "INSERT INTO alumnos (nombre, apellidos, altura, aula) VALUES ('Ana', 'Lopez', 165, 1)");
+                stm.executeUpdate(
+                        "INSERT INTO alumnos (nombre, apellidos, altura, aula) VALUES ('Luis', 'Garcia', 175, 2)");
+                stm.executeUpdate(
+                        "INSERT INTO alumnos (nombre, apellidos, altura, aula, edad) VALUES ('Marta', 'Sanchez', 160, 1, 20)");
+                conexion.commit();
+            } catch (SQLException e) {
+                conexion.rollback();
+            }
+        } catch (SQLException e) {
+        } finally {
+            try {
+                conexion.setAutoCommit(true);
+            } catch (SQLException e) {
+            }
         }
     }
 
@@ -277,7 +289,7 @@ public class Alumnos {
                 System.out.println(tableName + " (" + tableType + ")");
             }
         } catch (SQLException e) {
-            System.out.println("Error al obtener las tablas: " + e.getLocalizedMessage());
+            System.out.println("Error las tablas: " + e.getLocalizedMessage());
         }
     }
 
@@ -292,7 +304,7 @@ public class Alumnos {
                 System.out.println(tableName + " (" + tableType + ")");
             }
         } catch (SQLException e) {
-            System.out.println("Error al obtener las tablas: " + e.getLocalizedMessage());
+            System.out.println("Error las tablas: " + e.getLocalizedMessage());
         }
     }
 
@@ -313,7 +325,7 @@ public class Alumnos {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Error al obtener las bases de datos y tablas: " + e.getLocalizedMessage());
+            System.out.println("Error bases de datos y tablas: " + e.getLocalizedMessage());
         }
     }
 
@@ -328,7 +340,7 @@ public class Alumnos {
                 System.out.println("- " + procedureName);
             }
         } catch (SQLException e) {
-            System.out.println("Error al obtener los procedimientos almacenados: " + e.getLocalizedMessage());
+            System.out.println("Error procedimientos almacenados: " + e.getLocalizedMessage());
         }
     }
 
@@ -370,7 +382,7 @@ public class Alumnos {
     // disco duro. Para ello usamos el método getBinaryStream. Este método
     // devuelve un objeto de tipo InputStream. Del cual tendremos que ir leyendo
     // bytes y almacenándolos en un archivo binario del disco duro.
-    public static void almacenarImagen(){
+    public static void almacenarImagen() {
         try (Statement st = conexion.createStatement()) {
             ResultSet rs = st.executeQuery("SELECT * FROM imagenes WHERE nombre = 'escritor1.jpg'");
             while (rs.next()) {
@@ -389,13 +401,14 @@ public class Alumnos {
         } catch (SQLException e) {
         }
     }
+
     // b. Vamos ahora a almacenar una imagen que está guardada en el disco duro en
     // la base de datos. Para ello creamos una sentencia preparada para insertar
     // datos en la tabla imágenes. Para establecer el elemento binario usamos el
     // método setBinaryStream con los siguientes argumentos: posición del campo
     // imagen, objeto de tipo FileImputStream (que apunta a la imagen que
     // queremos insertar) y número de bytes que vamos a escribir.
-    public static void insertarImagen(){
+    public static void insertarImagen() {
         String query = "INSERT INTO imagenes (nombre, imagen) VALUES (?, ?)";
         try (PreparedStatement ps = conexion.prepareStatement(query)) {
             File file = new File("C:\\imagenes\\escritor1.jpg");
@@ -408,6 +421,7 @@ public class Alumnos {
         } catch (SQLException e) {
         }
     }
+
     // 15. Crea un método que ejecute el procedimiento almacenado getAulas y la
     // función
     // Suma de la base de datos Add. Visualiza los datos que devuelven.
@@ -425,6 +439,7 @@ public class Alumnos {
         } catch (SQLException e) {
         }
     }
+
     // 16. Realiza un método que permita buscar una cadena de texto en cualquier
     // columna de tipo char o varchar de cualquier tabla de una base datos dada.
     // Debe
